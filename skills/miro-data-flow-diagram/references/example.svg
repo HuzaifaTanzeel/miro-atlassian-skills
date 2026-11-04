@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<g id="f_dfd0" transform="translate(0,0)" data-frame="[DFD-0] Expense Service context">
+<rect data-type="frame" x="0" y="0" width="1600" height="1200" fill="#ffffff" data-title="[DFD-0] Expense Service context" />
+<textArea x="64" y="56" width="1472" font-family="noto_sans" font-size="33" font-weight="bold" fill="#1a1a1a">Expense Service context</textArea>
+<textArea x="64" y="124" width="1472" font-family="noto_sans" font-size="18" fill="#595959">Scope: Expense Service as one process, hosted in-country. Shows which outside parties send and receive which data.</textArea>
+<rect id="tb_platform" x="560" y="460" width="480" height="280" fill="none" stroke="#CC7830" stroke-width="2" stroke-dasharray="5,5" data-content="Trust boundary: Platform" data-text-color="#542700" data-font-family="noto_sans" data-font-size="16" data-font-weight="bold" data-text-align="left" data-text-align-vertical="top" />
+<rect id="tb_external" x="1208" y="728" width="304" height="184" fill="none" stroke="#CC7830" stroke-width="2" stroke-dasharray="5,5" data-content="Trust boundary: Third party" data-text-color="#542700" data-font-family="noto_sans" data-font-size="16" data-font-weight="bold" data-text-align="left" data-text-align-vertical="top" />
+<rect id="p0" x="620" y="520" width="360" height="160" rx="24" fill="#9CE6FF" stroke="#2C97BB" stroke-width="2" data-text-color="#1C4657" data-font-family="noto_sans" data-font-size="22" data-font-weight="bold" data-content="0&lt;br&gt;Expense Service" />
+<rect id="e_employee" x="120" y="200" width="240" height="100" fill="#DDDDD8" stroke="#8A8A7E" stroke-width="2" data-text-color="#434339" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Employee" />
+<rect id="e_approver" x="120" y="880" width="240" height="100" fill="#DDDDD8" stroke="#8A8A7E" stroke-width="2" data-text-color="#434339" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Approver" />
+<rect id="e_idp" x="1240" y="300" width="240" height="100" fill="#DDDDD8" stroke="#8A8A7E" stroke-width="2" data-text-color="#434339" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Identity Provider" />
+<rect id="e_payroll" x="1240" y="780" width="240" height="100" fill="#DDDDD8" stroke="#8A8A7E" stroke-width="2" data-text-color="#434339" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Payroll System" />
+<textArea x="64" y="1032" width="1100" font-family="noto_sans" font-size="16" fill="#595959">Gray box: external entity. Blue rounded box: process. Arrow: data flow toward the receiver. Two heads: data both ways (forward / back).<br/>Dashed orange box: trust boundary. Purple flow: personal data [PD].</textArea>
+<textArea x="1036" y="1104" width="500" font-family="noto_sans" font-size="16" text-align="right" fill="#595959">Status: Draft | v1 | 2026-01-01</textArea>
+</g>
+<line x1="0" y1="0" x2="1" y2="1" data-start="e_employee" data-end="p0" data-start-side="right" data-end-side="left" data-shape="straight" data-arrow="both" stroke="#8A7BE0" stroke-width="2" data-content="Claim, receipt [PD] / Claim status" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="e_approver" data-end="p0" data-start-side="right" data-end-side="left" data-shape="straight" data-arrow="both" stroke="#313131" stroke-width="2" data-content="Approval decision / Claims to review" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="e_idp" data-end="p0" data-start-side="left" data-end-side="top" data-shape="elbowed" data-arrow="end" stroke="#313131" stroke-width="2" data-content="Sign-in assertion" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="p0" data-end="e_payroll" data-start-side="right" data-end-side="left" data-shape="elbowed" data-arrow="end" stroke="#8A7BE0" stroke-width="2" data-content="Approved payment [PD]" />
+</svg>

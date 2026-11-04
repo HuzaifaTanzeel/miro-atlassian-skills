@@ -1,0 +1,14 @@
+{
+  "name": "miro-to-confluence-scripts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Converts a Miro canvas-composer SVG frame into a standalone SVG and PNG.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

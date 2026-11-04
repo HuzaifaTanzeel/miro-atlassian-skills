@@ -1,0 +1,25 @@
+# miro-atlassian-skills config
+# Copy to your project root as miro-atlassian.config.yaml.
+# It holds ids, not secrets. Commit it if your team shares the same space and board.
+# Blank values mean "not set". Each person logs in to the MCP servers as themselves.
+
+atlassian:
+  site: https://your-site.atlassian.net
+  cloudId: ""          # filled on first run from getAccessibleAtlassianResources
+  spaceKey: ""         # e.g. ENG
+  spaceId: ""          # numeric, filled at bootstrap
+  homepageId: ""       # numeric, filled at bootstrap
+
+map:
+  confluencePageId: "" # the "Workspace map" page, filled at bootstrap
+  parentPageId: ""     # where to create the map page; blank = space root
+  cachePath: .miro-atlassian/workspace-map.md
+  staleAfterDays: 7
+
+miro:
+  defaultBoard: ""     # full board URL, e.g. https://miro.com/app/board/uXjVExample=/
+  plan: free           # free | paid. On free, never create a board without asking.
+
+# Reserved for a future jira-* skill. No skill in this suite reads it yet.
+jira:
+  projectKey: ""

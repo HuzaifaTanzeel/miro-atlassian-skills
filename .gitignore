@@ -1,0 +1,21 @@
+# Workspace data never belongs in this repo
+private/
+miro-atlassian.config.yaml
+workspace-map.md
+.miro-atlassian/
+
+# Script dependencies and render output
+node_modules/
+*.png
+!docs/img/*.png
+*.frame.svg
+out/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# local list of private strings for scripts/check-private.mjs
+.private-strings

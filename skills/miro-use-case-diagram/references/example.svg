@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<g id="f_uc" transform="translate(0,0)" data-frame="[UC] Expense claims">
+<rect data-type="frame" x="0" y="0" width="1600" height="1200" fill="#ffffff" data-title="[UC] Expense claims" />
+<textArea x="64" y="56" width="1472" font-family="noto_sans" font-size="33" font-weight="bold" fill="#1a1a1a">Expense claims</textArea>
+<textArea x="64" y="124" width="1472" font-family="noto_sans" font-size="18" fill="#595959">Scope: Expense Service. Shows who uses the service and for which goals.</textArea>
+<rect id="sys" x="360" y="200" width="880" height="720" fill="#ffffff" stroke="#757575" stroke-width="2" data-content="Expense Service" data-text-color="#1a1a1a" data-font-family="noto_sans" data-font-size="22" data-font-weight="bold" data-text-align="left" data-text-align-vertical="top" />
+<ellipse id="uc_submit" cx="600" cy="300" rx="170" ry="36" fill="#9CE6FF" stroke="#2C97BB" stroke-width="2" data-text-color="#1C4657" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Submit expense claim" />
+<ellipse id="uc_receipt" cx="600" cy="430" rx="170" ry="36" fill="#FFE86D" stroke="#A28E26" stroke-width="2" data-text-color="#574900" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Attach receipt" />
+<ellipse id="uc_track" cx="600" cy="560" rx="170" ry="36" fill="#9CE6FF" stroke="#2C97BB" stroke-width="2" data-text-color="#1C4657" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Track claim status" />
+<ellipse id="uc_approve" cx="600" cy="690" rx="170" ry="36" fill="#9CE6FF" stroke="#2C97BB" stroke-width="2" data-text-color="#1C4657" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Approve claim" />
+<ellipse id="uc_moreinfo" cx="600" cy="820" rx="170" ry="36" fill="#FFB575" stroke="#CC7830" stroke-width="2" data-text-color="#542700" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Request more information" />
+<ellipse id="uc_signin" cx="1000" cy="495" rx="170" ry="36" fill="#FFE86D" stroke="#A28E26" stroke-width="2" data-text-color="#574900" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="Sign in" />
+<g data-group="">
+<rect id="act_employee" x="140" y="371" width="80" height="118" fill="none" stroke="none" />
+<circle cx="180" cy="389" r="18" fill="#1a1a1a" stroke="#313131" stroke-width="2" />
+<line data-type="divider" x1="180" y1="407" x2="180" y2="453" stroke="#1a1a1a" stroke-width="2" />
+<line data-type="divider" x1="152" y1="425" x2="208" y2="425" stroke="#1a1a1a" stroke-width="2" />
+<line data-type="divider" x1="180" y1="453" x2="160" y2="489" stroke="#1a1a1a" stroke-width="2" />
+<line data-type="divider" x1="180" y1="453" x2="200" y2="489" stroke="#1a1a1a" stroke-width="2" />
+<textArea x="90" y="497" width="180" font-family="noto_sans" font-size="18" font-weight="bold" text-align="center" fill="#1a1a1a">Employee</textArea>
+</g>
+<g data-group="">
+<rect id="act_approver" x="140" y="631" width="80" height="118" fill="none" stroke="none" />
+<circle cx="180" cy="649" r="18" fill="#1a1a1a" stroke="#313131" stroke-width="2" />
+<line data-type="divider" x1="180" y1="667" x2="180" y2="713" stroke="#1a1a1a" stroke-width="2" />
+<line data-type="divider" x1="152" y1="685" x2="208" y2="685" stroke="#1a1a1a" stroke-width="2" />
+<line data-type="divider" x1="180" y1="713" x2="160" y2="749" stroke="#1a1a1a" stroke-width="2" />
+<line data-type="divider" x1="180" y1="713" x2="200" y2="749" stroke="#1a1a1a" stroke-width="2" />
+<textArea x="90" y="757" width="180" font-family="noto_sans" font-size="18" font-weight="bold" text-align="center" fill="#1a1a1a">Approver</textArea>
+</g>
+<rect id="act_idp" x="1320" y="451" width="200" height="88" fill="#DDDDD8" stroke="#8A8A7E" stroke-width="2" data-text-color="#434339" data-font-family="noto_sans" data-font-size="18" data-font-weight="bold" data-content="&#171;system&#187;&lt;br&gt;Identity Provider" />
+<textArea x="64" y="1032" width="900" font-family="noto_sans" font-size="16" fill="#595959">Solid line: the actor takes part in the use case.<br/>Dashed &#171;include&#187;: the base always runs the included use case.<br/>Dashed &#171;extend&#187;: optional behaviour added to the base when the condition holds.<br/>Blue: user goal. Yellow: shared sub-goal. Orange: extension. Gray: external system.</textArea>
+<textArea x="1036" y="1104" width="500" font-family="noto_sans" font-size="16" text-align="right" fill="#595959">Status: Draft | v1 | 2026-01-01</textArea>
+</g>
+<line x1="0" y1="0" x2="1" y2="1" data-start="act_employee" data-end="uc_submit" data-start-side="right" data-end-side="left" data-shape="straight" stroke="#313131" stroke-width="2" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="act_employee" data-end="uc_track" data-start-side="right" data-end-side="left" data-shape="straight" stroke="#313131" stroke-width="2" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="act_approver" data-end="uc_approve" data-start-side="right" data-end-side="left" data-shape="straight" stroke="#313131" stroke-width="2" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="act_idp" data-end="uc_signin" data-start-side="left" data-end-side="right" data-shape="straight" stroke="#313131" stroke-width="2" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="uc_submit" data-end="uc_receipt" data-start-side="bottom" data-end-side="top" data-shape="straight" stroke="#2C97BB" stroke-width="2" stroke-dasharray="5,5" data-arrow="end" data-content="&#171;include&#187;" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="uc_submit" data-end="uc_signin" data-start-side="right" data-end-side="left" data-shape="straight" stroke="#2C97BB" stroke-width="2" stroke-dasharray="5,5" data-arrow="end" data-content="&#171;include&#187;" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="uc_approve" data-end="uc_signin" data-start-side="right" data-end-side="left" data-shape="straight" stroke="#2C97BB" stroke-width="2" stroke-dasharray="5,5" data-arrow="end" data-content="&#171;include&#187;" />
+<line x1="0" y1="0" x2="1" y2="1" data-start="uc_moreinfo" data-end="uc_approve" data-start-side="top" data-end-side="bottom" data-shape="straight" stroke="#CC7830" stroke-width="2" stroke-dasharray="5,5" data-arrow="end" data-content="&#171;extend&#187; (receipt unclear)" />
+</svg>
