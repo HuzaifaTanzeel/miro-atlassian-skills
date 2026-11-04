@@ -1,0 +1,16 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    {
+      "title": "Miro and Confluence",
+      "description": "One set. The diagram skills read the workspace map, and publishing writes the picture back to Confluence.",
+      "skills": [
+        "workspace-map",
+        "miro-use-case-diagram",
+        "miro-sequence-diagram",
+        "miro-data-flow-diagram",
+        "miro-to-confluence"
+      ]
+    }
+  ]
+}

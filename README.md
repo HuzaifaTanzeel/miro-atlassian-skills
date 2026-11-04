@@ -22,17 +22,27 @@ The diagram skills follow published notation rules (UML 2.5, Gane-Sarson, Micros
 
 ## Quick start
 
-1. Connect the Miro (`https://mcp.miro.com/`) and Atlassian (`https://mcp.atlassian.com/v2/mcp`) MCP servers.
-2. Install the skills:
+You do not create `miro-atlassian.config.yaml` or `.miro-atlassian/workspace-map.md` yourself. Sign in, add the skills, paste one prompt. Details (including **Claude.ai**, where there is no `npx`): [docs/first-run.md](docs/first-run.md).
+
+1. Connect the Miro (`https://mcp.miro.com/`) and Atlassian (`https://mcp.atlassian.com/v2/mcp`) MCP servers and sign in.
+2. Install the whole set. The command installs all five skills, then asks which agents you use (Cursor, Claude Code, and any others it finds). It does not ask you to pick skills one by one.
 
    ```bash
-   npx skills add HuzaifaTanzeel/miro-atlassian-skills
+   npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill '*'
    ```
 
-3. Build the map once:
+   Add `-g` to install for every project. On Claude.ai, upload each folder under `skills/` as a custom skill. Full steps: [docs/install.md](docs/install.md).
+3. In a new chat, paste:
 
    ```text
-   Build the workspace map for Confluence space KEY and Miro board <board URL>.
+   Set up miro-atlassian-skills for this workspace. I have signed in to the Miro and Atlassian connectors. I do not have miro-atlassian.config.yaml or a workspace map yet. Do not ask me to write YAML or markdown by hand.
+
+   1. From Atlassian, list the sites I can access. If there is more than one, ask which. Then list Confluence spaces on that site (key, name, id).
+   2. From Miro, list my boards (name and URL).
+   3. Ask me once, with numbered choices: which Confluence space, which Miro board (or all my boards), and where to create a page titled "Workspace map".
+   4. After I answer: scan that space's page tree (titles and ids only) and the chosen board's frames. Build the map, ask before creating the page, then create it.
+   5. Write local config and cache only if this environment can write files. On Claude.ai, skip those and give me a "Workspace map: Confluence page …" line for Project instructions.
+   6. Report counts, then stop.
    ```
 
 4. Draw and publish:
@@ -42,10 +52,13 @@ The diagram skills follow published notation rules (UML 2.5, Gane-Sarson, Micros
    Publish it to the Sequence Diagrams page.
    ```
 
-Full steps, including manual install and Node.js for PNG export: [docs/install.md](docs/install.md).
+On Claude.ai, publishing a PNG needs the frame exported from Miro and attached in the chat (no Node, no `curl`). Cursor and Claude Code can render and upload on their own.
+
+Full steps: [docs/first-run.md](docs/first-run.md), [docs/install.md](docs/install.md).
 
 ## Docs
 
+- [First run](docs/first-run.md): connectors, Claude.ai without npx, the paste-ready setup prompt
 - [Install](docs/install.md)
 - [Tool budget](docs/tool-budget.md): which MCP tools you can switch off.
 - [Architecture](docs/architecture.md): the map, rendering, and how Jira plugs in later.

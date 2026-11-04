@@ -1,0 +1,15 @@
+{
+  "name": "miro-atlassian-skills",
+  "version": "1.0.0",
+  "description": "Draw UML and data-flow diagrams on Miro and publish them to Confluence. The five skills install together: the workspace map, three diagram skills, and Confluence publishing.",
+  "author": {
+    "name": "Huzaifa Tanzeel"
+  },
+  "skills": [
+    "./skills/workspace-map",
+    "./skills/miro-use-case-diagram",
+    "./skills/miro-sequence-diagram",
+    "./skills/miro-data-flow-diagram",
+    "./skills/miro-to-confluence"
+  ]
+}

@@ -1,6 +1,8 @@
 # Install
 
-Three steps: connect the two MCP servers, install the skills, then build the workspace map once.
+**First time?** You never write `miro-atlassian.config.yaml` or the workspace map by hand. Follow [first-run.md](first-run.md): sign in, add the skills (including on Claude.ai without npx), then paste the setup prompt.
+
+This page is the short technical list. Claude.ai, copy-the-folders, and the paste-ready prompt are in [first-run.md](first-run.md).
 
 ## 1. Connect Miro and Atlassian
 
@@ -31,17 +33,29 @@ claude mcp add --transport http atlassian https://mcp.atlassian.com/v2/mcp
 
 Then run `/mcp` and sign in to each.
 
+**Claude.ai and Claude Desktop**: Settings → Connectors. Add both URLs as remote connectors and sign in. There is no `npx` and no project folder; see [first-run.md](first-run.md).
+
 **Other clients**: add both URLs as remote (streamable HTTP) MCP servers in the client's settings.
 
 Optional: switch off the tools you do not need, as listed in [tool-budget.md](tool-budget.md).
 
 ## 2. Install the skills
 
-With the [skills CLI](https://github.com/vercel-labs/skills), which detects Cursor, Claude Code, and other agents:
+The five skills are one set. The diagram skills read the workspace map, so installing one of them on its own leaves the others with nothing to look up.
+
+With the [skills CLI](https://github.com/vercel-labs/skills), from the project where you want them:
 
 ```bash
-npx skills add HuzaifaTanzeel/miro-atlassian-skills            # all five
-npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill miro-sequence-diagram --skill miro-to-confluence
+npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill '*'
+```
+
+`--skill '*'` installs all five and skips the per-skill checklist. The CLI then asks, interactively, which agents to install into. Pick the ones you use (Cursor, Claude Code, and any others it finds) and confirm. Add `-g` if you want them in every project instead of this one.
+
+In Claude Code you can install the same set as one plugin:
+
+```text
+/plugin marketplace add HuzaifaTanzeel/miro-atlassian-skills
+/plugin install miro-atlassian-skills@miro-atlassian-skills
 ```
 
 Or copy folders by hand. Each folder under `skills/` is self-contained:
@@ -52,7 +66,7 @@ Or copy folders by hand. Each folder under `skills/` is self-contained:
 | Claude Code | `.claude/skills/<name>/` | `~/.claude/skills/<name>/` |
 | Others following the Agent Skills format | see the agent's docs | |
 
-Install `workspace-map` together with any other skill; they all read the map it builds.
+Copy all five folders. They are written to be installed together.
 
 ### Publishing needs Node.js
 
@@ -66,19 +80,20 @@ Sequence diagrams also use `npx @mermaid-js/mermaid-cli`, which downloads a head
 
 ## 3. Build the map
 
-Ask your agent:
+Do not create the config or the cache yourself. In a new chat, paste the prompt in [first-run.md](first-run.md) (also `skills/workspace-map/assets/first-run-prompt.md`). If you already know the space and board:
 
 ```text
 Build the workspace map for Confluence space KEY and Miro board <board URL>.
 ```
 
-It reads the page tree (titles and ids only, no page bodies) and the board's frame list, asks before creating the `Workspace map` page, and writes:
+The agent lists what it can see from the two connectors, asks you to pick a space, a board, and a parent page, then writes:
 
-- `miro-atlassian.config.yaml` in the project root (site, cloudId, space, map page id). Safe to commit inside a private project; it holds ids, not secrets.
-- `.miro-atlassian/workspace-map.md`, the local cache. Add `.miro-atlassian/` to `.gitignore`.
-- One line in your `AGENTS.md`: `Workspace map: Confluence page <id>, ...`, so every agent finds the map without the config.
+- A Confluence page titled `Workspace map` (this is the copy the team shares; enough on its own for Claude.ai).
+- `miro-atlassian.config.yaml` in the project root, **only if** the chat can write files. Ids, not secrets. Safe to commit inside a private project.
+- `.miro-atlassian/workspace-map.md`, the local cache, same condition. Gitignore `.miro-atlassian/`.
+- One pointer line for `AGENTS.md` or a Claude Project's custom instructions.
 
-Copy `skills/workspace-map/assets/config.example.yaml` if you want to fill the config by hand.
+Copy `skills/workspace-map/assets/config.example.yaml` only if you want to commit known ids yourself. Leaving it to the first-run prompt is the usual path.
 
 ## 4. Try it
 
