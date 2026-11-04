@@ -1,0 +1,26 @@
+{
+  "name": "miro-atlassian-skills",
+  "owner": {
+    "name": "Huzaifa Tanzeel"
+  },
+  "metadata": {
+    "description": "Draw standard design diagrams on Miro and publish them to Confluence.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "miro-atlassian-skills",
+      "description": "UML use case, sequence, and data-flow diagrams on Miro, plus publishing a frame to Confluence. Includes the shared workspace map. Install the whole plugin.",
+      "version": "1.0.0",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/workspace-map",
+        "./skills/miro-use-case-diagram",
+        "./skills/miro-sequence-diagram",
+        "./skills/miro-data-flow-diagram",
+        "./skills/miro-to-confluence"
+      ]
+    }
+  ]
+}
