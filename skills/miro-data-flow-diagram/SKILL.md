@@ -1,8 +1,8 @@
 ---
 name: miro-data-flow-diagram
-description: Draw or update a data flow diagram (DFD) on a Miro board to a fixed standard, using Gane-Sarson symbols, context and level-1 levelling, labelled data flows, trust boundaries, and personal-data markers for privacy and threat-model reviews. Use when the user asks to create, draw, or update a data flow diagram, DFD, context diagram, level 0 or level 1 diagram, or a trust boundary or data residency view on Miro. Reads the shared workspace map so the board and frame are found by id. Not for use case or sequence diagrams, and not for publishing to Confluence.
+description: Draw or update a data flow diagram on a Miro board (Gane-Sarson symbols, context/level 1, trust boundaries, personal-data markers). Use when the user asks to create, draw, or update a DFD, context diagram, level 0/1 diagram, or trust-boundary / data-residency view on Miro. Not for use case or sequence diagrams, or publishing to Confluence.
 license: MIT
-compatibility: Needs the Miro MCP server (https://mcp.miro.com/) with the canvas_* tools. The Atlassian MCP server is optional and only used to read or update the workspace map.
+compatibility: Needs Miro MCP (https://mcp.miro.com/) with canvas_* tools; Atlassian MCP optional for the workspace map.
 metadata:
   version: "0.1.0"
   suite: miro-atlassian-skills

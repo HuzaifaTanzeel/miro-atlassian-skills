@@ -1,8 +1,8 @@
 ---
 name: miro-to-confluence
-description: Publish a Miro diagram frame to a Confluence page as a PNG image with a written description, using the workspace map to find the frame and the target page by id instead of searching. Use when the user asks to publish, copy, export, move, attach, or put a Miro diagram or frame on a Confluence page (the relevant page, a named page, or a new page), or to refresh a diagram already published there. Not for Confluence whiteboards or Miro embeds.
+description: Publish a Miro diagram frame to a Confluence page as a PNG with a written description. Use when the user asks to publish, copy, export, attach, or put a Miro diagram or frame on a Confluence page (existing, named, or new), or to refresh a diagram already there. Not for Confluence whiteboards or Miro embeds.
 license: MIT
-compatibility: Needs the Miro MCP server (https://mcp.miro.com/), the Atlassian MCP server (https://mcp.atlassian.com/v2/mcp), Node.js 20 or later, and a shell that can run the upload command the Atlassian server returns. Sequence diagrams also need npx to fetch @mermaid-js/mermaid-cli (downloads Chromium on first use).
+compatibility: Needs Miro MCP, Atlassian MCP, Node.js 20+, and a shell for the upload command the Atlassian server returns.
 metadata:
   version: "0.1.0"
   suite: miro-atlassian-skills

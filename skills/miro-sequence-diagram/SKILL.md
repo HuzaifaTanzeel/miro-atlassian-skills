@@ -1,8 +1,8 @@
 ---
 name: miro-sequence-diagram
-description: Draw or update a UML sequence diagram on a Miro board as a Mermaid diagram widget inside a standard frame, with ordered lifelines, numbered messages, activations, and alt, opt, loop, par, and break fragments. Use when the user asks to create, draw, or update a sequence diagram, interaction diagram, or "what calls what, in order" for one scenario on Miro. Reads the shared workspace map so the board and frame are found by id. Not for use case or data flow diagrams, and not for publishing to Confluence.
+description: Draw or update a UML sequence diagram on a Miro board as a Mermaid widget (lifelines, messages, activations, fragments). Use when the user asks to create, draw, or update a sequence diagram, interaction diagram, or "what calls what, in order" for one scenario on Miro. Not for use case or data flow diagrams, or publishing to Confluence.
 license: MIT
-compatibility: Needs the Miro MCP server (https://mcp.miro.com/) with the canvas_* tools and the Mermaid diagram widget. The Atlassian MCP server is optional and only used to read or update the workspace map.
+compatibility: Needs Miro MCP (https://mcp.miro.com/) with canvas_* tools and Mermaid widgets; Atlassian MCP optional for the workspace map.
 metadata:
   version: "0.1.0"
   suite: miro-atlassian-skills

@@ -1,8 +1,8 @@
 ---
 name: miro-use-case-diagram
-description: Draw or update a UML use case diagram on a Miro board to a fixed standard, with actors as stick figures, a system boundary, use case ovals, and «include» and «extend» relationships. Use when the user asks to create, draw, sketch, or update a use case diagram, actor diagram, or "who does what with the system" view on Miro. Reads the shared workspace map so the board and frame are found by id. Not for sequence or data flow diagrams, and not for publishing to Confluence.
+description: Draw or update a UML use case diagram on a Miro board (actors, system boundary, use cases, «include»/«extend»). Use when the user asks to create, draw, sketch, or update a use case diagram, actor diagram, or "who does what with the system" view on Miro. Not for sequence or data flow diagrams, or publishing to Confluence.
 license: MIT
-compatibility: Needs the Miro MCP server (https://mcp.miro.com/) with the canvas_* tools. The Atlassian MCP server is optional and only used to read or update the workspace map.
+compatibility: Needs Miro MCP (https://mcp.miro.com/) with canvas_* tools; Atlassian MCP optional for the workspace map.
 metadata:
   version: "0.1.0"
   suite: miro-atlassian-skills

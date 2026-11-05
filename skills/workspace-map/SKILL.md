@@ -1,8 +1,8 @@
 ---
 name: workspace-map
-description: Build, resync, or repair a small shared index of Confluence pages and Miro frames (ids, paths, one-sentence descriptions) stored on a Confluence page with a local cache, so agents open pages and frames by id instead of searching. Use when the user asks to build, bootstrap, refresh, resync, or fix the workspace map or diagram map, asks where a page or frame is, or when another skill finds the map missing or stale. Does not read page bodies and does not copy Jira issues into the map.
+description: Build, resync, or repair a shared index of Confluence pages and Miro frames (ids, paths, one-line descriptions) on a Confluence page with a local cache. Use when the user asks to build, bootstrap, refresh, resync, or fix the workspace/diagram map, asks where a page or frame is, or another skill finds the map missing or stale. Not for reading page bodies or copying Jira issues into the map.
 license: MIT
-compatibility: Needs the Atlassian MCP server (https://mcp.atlassian.com/v2/mcp) for Confluence. The Miro MCP server (https://mcp.miro.com/) is needed for the Miro rows. Writes one local cache file in the project.
+compatibility: Needs Atlassian MCP for Confluence; Miro MCP for Miro rows.
 metadata:
   version: "0.1.0"
   suite: miro-atlassian-skills
