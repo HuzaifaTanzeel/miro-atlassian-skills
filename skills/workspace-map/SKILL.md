@@ -42,7 +42,7 @@ Files:
 3. **The live system wins.** If an id works but the row is wrong, fix the row silently. If an id is gone, search inside the parent before asking.
 4. **Write it down when the user answers.** Every answer to "which one?" becomes an alias row.
 5. **Small rows.** One sentence per description. Pointers (`page 123`, `frame 456`, `PROJ-12`), never copies.
-6. **No Jira catalog.** Rows may carry an issue key in `links`. Fetch that issue only when the user asks about a ticket. A future `jira-*` skill reads the same keys (see the repository's `docs/architecture.md`).
+6. **No Jira catalog.** Rows may carry an issue key in `links`. Fetch that issue only when the user asks about a ticket. A future `jira-*` skill reads the same keys.
 7. **Never block.** If the map cannot be read or written, say so in one line and let the user's task continue.
 
 ## Bootstrap in one prompt
