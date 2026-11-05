@@ -1,7 +1,7 @@
 # miro-atlassian-skills
 
 <p align="center">
-  <img src="docs/img/miro-atlassian-loop.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
+  <img src="docs/img/banner-3-split.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
 </p>
 
 Agent skills that draw standard design diagrams on Miro and publish them to Confluence, without the agent searching your whole workspace each time.
