@@ -47,7 +47,7 @@ Once per chat: `canvas_get_canvas_composer_skill` (`design`, then `dsl`), then `
 
 ### 6. Check and record
 
-1. Read `references/checklist.md`; fix failures.
+1. Run the Checklist section of `references/notation.md`; fix failures.
 2. Write map row (`map-contract.md`): type `sequence`, one-sentence description, links if known.
 3. Report frame title/link, counts, `UNKNOWN/VERIFY`, offer to publish (Mermaid in an expand block if wanted).
 

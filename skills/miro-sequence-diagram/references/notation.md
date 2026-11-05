@@ -1,5 +1,7 @@
 # Sequence diagram notation
 
+Contents: [What a sequence diagram is for](#what-a-sequence-diagram-is-for) · [Participants](#participants) · [Messages](#messages) · [Activations](#activations) · [Combined fragments](#combined-fragments) · [Notes](#notes) · [Mermaid limits on Miro](#mermaid-limits-on-miro) · [Budgets](#budgets) · [Checklist](#checklist) · [Notation](#notation) · [Widget and layout](#widget-and-layout) · [Record](#record)
+
 Paraphrased from UML 2.5.1 clause 17 (Interactions). Mermaid syntax adapted from the Mermaid documentation (MIT). Budgets adapted from Miro's `miro-code-explain-on-board` skill (MIT). See `CREDITS.md`.
 
 ## What a sequence diagram is for
@@ -77,3 +79,33 @@ Do not use: `box`, `create`/`destroy`, bidirectional arrows `<<->>`, half arrows
 | Messages | 12 to 20 | more than 20, or branch-heavy: split into "Overview" and "Detail" |
 | Fragment depth | 1 to 2 | 3 or more |
 | Notes | 0 to 3 | more than 3: move rules to the Confluence description |
+
+## Checklist
+
+Run this against the source you sent and the `result_svg` before you report done.
+
+## Notation
+
+- [ ] Frame title starts with `[SEQ] ` and names one scenario.
+- [ ] `autonumber` is on.
+- [ ] The initiating actor is the leftmost participant. Data stores and external systems are on the right.
+- [ ] Humans are `actor`, everything else is `participant`. Every participant sends or receives at least one message.
+- [ ] Every call has a reply when the caller waits for one, and every reply says what comes back.
+- [ ] No vague labels (*uses, handles, processes, manages, sends data, OK, response*).
+- [ ] Every activation is closed. No `-` deactivation on replies in more than one `alt` branch.
+- [ ] Fragments nest at most two deep. Guards are written as conditions.
+- [ ] Only Mermaid 10 syntax listed in `notation.md` ("Mermaid limits on Miro").
+- [ ] Within budget: at most 8 participants and 20 messages, or split.
+
+## Widget and layout
+
+- [ ] The diagram widget rendered (not skipped). If the response lists it as failed, fix the Mermaid and resend; do not switch to hand-drawn shapes.
+- [ ] Frame is big enough for the size estimate in `layout.md`. Nothing overlaps the legend or footer after the widget grew; move the legend and footer down if it did.
+- [ ] Header, subtitle, scenario line, legend, and footer are in their regions.
+- [ ] Every `UNKNOWN/VERIFY` item is listed in the legend.
+
+## Record
+
+- [ ] Map row written: type `sequence`, frameId, title, one-sentence description, links.
+- [ ] Frame link and the step count reported to the user.
+

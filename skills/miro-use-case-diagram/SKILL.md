@@ -60,7 +60,7 @@ Once per chat: `canvas_get_canvas_composer_skill` (`design`, then `dsl`), then `
 
 ### 6. Check and record
 
-1. Read `references/checklist.md`; fix failures against `result_svg`.
+1. Run the Checklist section of `references/notation.md` against `result_svg`; fix failures.
 2. Write the map row (`map-contract.md` "Write one row back"): type `use-case`, one-sentence description, links if known.
 3. Report frame title/link, counts, `UNKNOWN/VERIFY`, offer to publish to Confluence.
 

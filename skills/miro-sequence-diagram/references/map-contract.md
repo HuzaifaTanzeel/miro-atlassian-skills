@@ -6,6 +6,8 @@ The workspace map is one small index of Confluence pages and Miro frames, with i
 
 The `workspace-map` skill owns bootstrap, resync, and repair. This file is the minimum every other skill needs: where the map is, how to read it cheaply, and how to write one row back.
 
+Contents: [Where it lives](#where-it-lives) · [Find the map](#find-the-map-stop-at-the-first-hit) · [Read it cheaply](#read-it-cheaply) · [Use it](#use-it) · [Map format](#map-format) · [Write one row back](#write-one-row-back-write-through)
+
 ## Where it lives
 
 | Piece | Location | Who reads it |

@@ -1,5 +1,7 @@
 # Mermaid patterns and escaping
 
+Contents: [Escaping](#escaping-inside-the-svg) · [Pattern 1](#pattern-1-request-with-validation-branch) · [Pattern 2](#pattern-2-asynchronous-notification) · [Pattern 3](#pattern-3-early-exit) · [Pattern 4](#pattern-4-loop-and-parallel-work) · [Pattern 5](#pattern-5-regulated-data-note) · [Sizing](#sizing)
+
 ## Escaping inside the SVG
 
 The Mermaid source is the body of a `<foreignObject data-type="diagram">`, so it is XML text:

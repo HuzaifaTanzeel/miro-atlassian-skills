@@ -6,7 +6,7 @@ Skills must work on the first run: an agent following `SKILL.md` literally shoul
 
 1. Create `skills/<name>/SKILL.md`. Name is lowercase, hyphenated, and starts with the product (`miro-`, `confluence-`, `jira-`). Directory name must match the frontmatter `name`.
 2. Description names this skill's own verbs. Do not overlap another skill's triggers (table below).
-3. Shared text lives in `shared/`. Add the skill to `scripts/sync-shared.mjs`, then run `node scripts/sync-shared.mjs`. Never edit the copies under `skills/*/references/` by hand.
+3. Shared text lives in `shared/` (canonical). Skills install standalone, so `node scripts/sync-shared.mjs` copies those files into each skill's `references/`. Add new skills to that script. Never edit the copies by hand.
 4. Quote only MIT, Apache-2.0, BSD, or CC BY text; add sources to `CREDITS.md`.
 
 | Skill | Triggers on |

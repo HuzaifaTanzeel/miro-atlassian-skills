@@ -76,7 +76,7 @@ Keep header and footer text short. No emojis, no decorative Unicode, no em dashe
 1. Show the user the textual model your skill asks for (elements and relationships) and wait for a yes, unless the user already supplied the full model and said to go ahead. Fixing a drawn diagram costs more than a question.
 2. Build **one** SVG with the frame and everything in it, and send it with `canvas_create_from_svg`. Use local ids that read well (`uc_approve`, `act_owner`, `p1`, `d1`).
 3. If the response reports changed dimensions, move only the affected widgets with `canvas_update_from_svg`, starting from the returned `result_svg`. Never regenerate the SVG from scratch, and never invent a `data-miro-id`.
-4. Check the result against your skill's `checklist.md` using the `result_svg` you already have. Call `canvas_read_as_svg` only if an item failed or the user edited the frame since.
+4. Check the result against the Checklist section of your skill's `notation.md` using the `result_svg` you already have. Call `canvas_read_as_svg` only if an item failed or the user edited the frame since.
 
 ## 7. Editing an existing diagram
 

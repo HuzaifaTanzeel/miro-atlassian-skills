@@ -30,7 +30,7 @@ From the request, attachments, or Confluence pages the map names:
 - Hosting / parties outside that zone → trust boundaries.
 - Flows carrying personal or sensitive data, if the source says so.
 
-Read `references/notation.md` and `references/checklist.md` (model checks). Fix violations before showing the model. Ungrounded → `UNKNOWN/VERIFY`.
+Read `references/notation.md` (model Checklist). Fix violations before showing the model. Ungrounded → `UNKNOWN/VERIFY`.
 
 ### 3. Confirm the model in chat
 
@@ -59,7 +59,7 @@ Once per chat: `canvas_get_canvas_composer_skill` (`design`, then `dsl`), then `
 
 ### 6. Check and record
 
-1. Run style checks in `references/checklist.md`.
+1. Run style checks in the Checklist section of `references/notation.md`.
 2. Write map row (`map-contract.md`): type `data-flow-0` or `data-flow-1`, one-sentence description, links (`frame <contextId>` on level-1).
 3. Report frame title/link, counts, flows that cross a trust boundary, `UNKNOWN/VERIFY`, offer to publish.
 
