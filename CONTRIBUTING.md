@@ -1,14 +1,13 @@
 # Contributing
 
-Thanks for adding to the suite. The goal is skills that work on the first run, so every change is judged by whether an agent following it literally produces the right result.
+Skills must work on the first run: an agent following `SKILL.md` literally should get the right result.
 
-## Add a new skill
+## Skill structure
 
-1. Create `skills/<name>/SKILL.md`. The name is lowercase, hyphenated, and starts with the product it acts on (`miro-`, `confluence-`, `jira-`).
-2. Write a description that names the skill's own verbs and objects. Check the table below; if your trigger words overlap an existing skill, narrow them.
-3. If the skill reads or writes Confluence pages or Miro frames, it uses the shared workspace map. Copy `shared/map-contract.md` into it by adding the skill to `scripts/sync-shared.mjs`. Do not create a second map.
-4. Add at least one prompt to `evals/prompts.yaml` with the expected tool calls.
-5. Add any source you quoted to `CREDITS.md` with its license. Only quote MIT, Apache-2.0, BSD, or CC BY text. Paraphrase and cite everything else.
+1. Create `skills/<name>/SKILL.md`. Name is lowercase, hyphenated, and starts with the product (`miro-`, `confluence-`, `jira-`). Directory name must match the frontmatter `name`.
+2. Description names this skill's own verbs. Do not overlap another skill's triggers (table below).
+3. Shared text lives in `shared/` (canonical). Skills install standalone, so `node scripts/sync-shared.mjs` copies those files into each skill's `references/`. Add new skills to that script. Never edit the copies by hand.
+4. Quote only MIT, Apache-2.0, BSD, or CC BY text; add sources to `CREDITS.md`.
 
 | Skill | Triggers on |
 |---|---|
@@ -18,13 +17,7 @@ Thanks for adding to the suite. The goal is skills that work on the first run, s
 | `miro-to-confluence` | publish / copy / export / put a Miro diagram or frame on a Confluence page as an image |
 | `workspace-map` | build / resync / repair the diagram map, or "where is" a page or frame |
 
-## Add a new MCP server or vendor
-
-Add rows to the `references/tool-map.md` of each affected skill. Do not change the resolution ladder. Add one eval prompt that runs on the new server.
-
-## Add Jira
-
-See `docs/architecture.md`, section "Plugging in Jira". In short: a `jira-*` skill reads the same map, uses the `links` column for issue keys, and never writes issue catalogs into the map.
+A `jira-*` skill should read the same map, use the `links` column for issue keys, and never store issue catalogs in the map.
 
 ## Before a pull request
 
@@ -34,4 +27,4 @@ node scripts/check-private.mjs
 npx skills add ./ --list
 ```
 
-Run the eval prompts that touch your change on at least two agents (for example Cursor and Claude Code).
+Try the changed skill on at least two agents (for example Cursor and Claude Code).

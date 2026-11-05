@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-// Convert one Miro frame, as returned by canvas_read_as_svg, into a standalone SVG and a PNG.
+// Fallback PNG renderer for miro-to-confluence.
+// Miro MCP exposes frame data as SVG (canvas_read_as_svg) and has no frame→PNG export.
+// board_preview_read returns SVG for the preview UI only. image_* tools only read image
+// widgets already on the board. This script is the local fallback: one file, one dependency
+// (@resvg/resvg-js). Mermaid widgets shell out to npx @mermaid-js/mermaid-cli when present.
 //
 // Usage:
 //   node frame-to-png.mjs INPUT OUTPUT.png [--frame ID] [--scale 2] [--svg-out FILE] [--title]
 //
-// INPUT is the "svg" string from canvas_read_as_svg saved to a file. A saved JSON response
-// with an "svg" field is accepted too.
+// INPUT is the "svg" string from canvas_read_as_svg saved to a file (or a JSON response with "svg").
 //
 // Exit codes:
 //   0  PNG written, nothing skipped
