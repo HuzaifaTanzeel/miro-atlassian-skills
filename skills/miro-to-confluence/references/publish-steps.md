@@ -21,7 +21,9 @@ Save the `svg` field, unchanged, to `.miro-atlassian/out/<slug>.frame.svg`, wher
 
 Keep this read: the description (step 7) is written from it. Do not read the frame a second time.
 
-## 3. Make the PNG
+## 3. Make the PNG (local fallback)
+
+Miro MCP does not export a frame as PNG. Use `scripts/frame-to-png.mjs` (Node 20+, `@resvg/resvg-js`) on the SVG from step 2. On Claude.ai (no Node), ask the user to export the frame as PNG from Miro and attach it instead.
 
 ```text
 node <skill-dir>/scripts/frame-to-png.mjs .miro-atlassian/out/<slug>.frame.svg .miro-atlassian/out/<slug>.png --svg-out .miro-atlassian/out/<slug>.svg

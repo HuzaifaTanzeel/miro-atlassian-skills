@@ -2,7 +2,7 @@
   "name": "miro-to-confluence-scripts",
   "version": "0.1.0",
   "private": true,
-  "description": "Converts a Miro canvas-composer SVG frame into a standalone SVG and PNG.",
+  "description": "Fallback: converts a Miro canvas-composer SVG frame into a standalone SVG and PNG when Miro MCP has no frame PNG export.",
   "type": "module",
   "license": "MIT",
   "engines": {

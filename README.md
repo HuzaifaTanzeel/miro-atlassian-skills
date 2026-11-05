@@ -56,7 +56,7 @@ Set up miro-atlassian-skills for this workspace. I have signed in to the Miro an
 
 Then draw and publish, for example: `Draw a sequence diagram for uploading evidence…` / `Publish it to the Sequence Diagrams page.`
 
-On Claude.ai, publishing a PNG needs the frame exported from Miro and attached in the chat (no Node, no `curl`). Cursor and Claude Code can render and upload on their own. Publishing needs Node 20+ for the local PNG script the first time you publish from those agents.
+Miro MCP does not export a frame as PNG, so Cursor and Claude Code use a small local script (`frame-to-png.mjs`, Node 20+, one npm install under the skill) as a fallback, then upload with Atlassian MCP. On Claude.ai (no Node), export the frame as PNG from Miro and attach it in the chat.
 
 ## Optional: tools you can disable
 
@@ -67,7 +67,7 @@ Safe to disable: Miro board/space/table/prototype/comment/admin tools; Atlassian
 
 - Miro and Confluence only. Jira is not used yet; map rows can carry issue keys as pointers.
 - Labels and descriptions in English.
-- The page shows a PNG and text, never a Miro embed.
+- The page shows a PNG and text, never a Miro embed. PNG comes from the local fallback script (or a user-attached export on Claude.ai), not from a Miro MCP export tool.
 
 ## Contributing
 
