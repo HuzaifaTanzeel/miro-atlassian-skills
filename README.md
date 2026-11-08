@@ -127,7 +127,7 @@ npx skills remove -g HuzaifaTanzeel/miro-atlassian-skills -y
 
 ## Claude.ai
 
-Claude.ai has no `npx`. Download one zip per skill from [`claude-upload/`](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/tree/main/claude-upload) and upload it. Each zip already contains `<skill-name>/SKILL.md`. A merge to `main` that changes `skills/` replaces those zips.
+Claude.ai has no `npx`. Download one zip per skill from [`claude-upload/`](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/tree/main/claude-upload) and upload it. Each zip already contains `<skill-name>/SKILL.md`. A pull request that changes `skills/` gets new zips committed on that branch. Merging the pull request puts them on `main` and replaces the previous files.
 
 | Skill | Download |
 |---|---|
