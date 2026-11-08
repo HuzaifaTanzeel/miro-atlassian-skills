@@ -4,9 +4,11 @@
   <img src="docs/img/banner-image.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
 </p>
 
-Draw a use case, sequence, or data-flow diagram on Miro, then put the picture on a Confluence page. Five [Agent Skills](https://agentskills.io) share one index of your pages and frames, so the agent opens them by id.
+## What this repo is
 
-Works with Cursor, Claude Code, Claude.ai, and any other agent the [skills CLI](https://skills.sh) installs.
+Five [Agent Skills](https://agentskills.io) for drawing on Miro and publishing to Confluence. Install them into Cursor, Claude Code, Claude.ai, or any other agent the [skills CLI](https://skills.sh) supports. Sign in to the Miro and Atlassian connectors, then ask in chat.
+
+One Confluence page, the workspace map, indexes your pages and Miro frames by id. The diagram skills draw a use case, a sequence, or a data-flow diagram as a frame on a Miro board. The publish skill puts that frame on a Confluence page as a PNG and a short description. A later chat reads the map and opens the page or frame by id.
 
 ## Install
 
