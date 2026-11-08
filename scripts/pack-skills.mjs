@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Zip each skills/<name>/ directory into claude-upload/<name>.zip.
-// SKILL.md is at the zip root, which is what Claude.ai custom-skill upload expects.
+// The zip contains <name>/SKILL.md, which is what Claude.ai custom-skill upload expects.
 // The same filenames are overwritten. A zip whose skill folder is gone is deleted.
 // Timestamps inside the zip are fixed so an unchanged skill does not produce a new file.
 
@@ -32,17 +32,17 @@ function skipFile(name) {
   return name === ".DS_Store" || name === "Thumbs.db" || name.endsWith(".png") || name.endsWith(".frame.svg") || name.endsWith(".zip");
 }
 
-function collect(dir, skillRoot, files) {
+function collect(dir, skillRoot, skillName, files) {
   for (const ent of readdirSync(dir, { withFileTypes: true })) {
     if (ent.isDirectory()) {
       if (skipDirs.has(ent.name)) continue;
-      collect(join(dir, ent.name), skillRoot, files);
+      collect(join(dir, ent.name), skillRoot, skillName, files);
       continue;
     }
     if (!ent.isFile() || skipFile(ent.name)) continue;
     const path = join(dir, ent.name);
-    const name = relative(skillRoot, path).split("\\").join("/");
-    files.push({ name, data: readFileSync(path) });
+    const rel = relative(skillRoot, path).split("\\").join("/");
+    files.push({ name: `${skillName}/${rel}`, data: readFileSync(path) });
   }
 }
 
@@ -106,10 +106,10 @@ const keep = new Set();
 for (const name of skills) {
   const skillRoot = join(skillsDir, name);
   const files = [];
-  collect(skillRoot, skillRoot, files);
+  collect(skillRoot, skillRoot, name, files);
   files.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-  if (!files.some((f) => f.name === "SKILL.md")) {
-    console.error(`${name}: SKILL.md is not at the skill root`);
+  if (!files.some((f) => f.name === `${name}/SKILL.md`)) {
+    console.error(`${name}: zip is missing ${name}/SKILL.md`);
     process.exit(1);
   }
   const zip = buildZip(files);

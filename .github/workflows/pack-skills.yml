@@ -1,5 +1,5 @@
 # After a pull request merges to main and skills/ changed, replace claude-upload/*.zip.
-# Each zip is one skill, with SKILL.md at the root, for Claude.ai custom-skill upload.
+# Each zip is one skill folder, <name>/SKILL.md, for Claude.ai custom-skill upload.
 # The commit only touches claude-upload/, which is outside the path filter, so it does not run again.
 # main's ruleset must let the GitHub Actions app bypass it, or the push of these zips is rejected.
 
