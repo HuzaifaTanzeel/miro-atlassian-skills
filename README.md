@@ -10,6 +10,8 @@ Five [Agent Skills](https://agentskills.io) for drawing on Miro and publishing t
 
 One Confluence page, the workspace map, indexes your pages and Miro frames by id. The diagram skills draw a use case, a sequence, or a data-flow diagram as a frame on a Miro board. The publish skill puts that frame on a Confluence page as a PNG and a short description. A later chat reads the map and opens the page or frame by id.
 
+That index is what keeps later chats cheap. The agent opens a known id instead of searching the space or the board, and a matching local cache is a version check, not another full page read. Each skill names the tool to call and loads a long procedure only at the step that needs it, so the prompt stays small. A frame is read once, Miro's authoring guide is loaded once per chat, and the Confluence write is a small edit of the diagram section instead of the whole page. Fewer connector calls and fewer tokens on every diagram after the first.
+
 ## Install
 
 Node.js 20 or newer. The command installs all five skills and asks which agents to use.
