@@ -1,7 +1,7 @@
 # miro-atlassian-skills
 
 <p align="center">
-  <img src="docs/img/banner-less-spacing.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
+  <img src="docs/img/banner-image.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
 </p>
 
 Draw a use case, sequence, or data-flow diagram on Miro, then put the picture on a Confluence page. Five [Agent Skills](https://agentskills.io) share one index of your pages and frames, so the agent opens them by id.
