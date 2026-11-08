@@ -3,7 +3,8 @@
 // Miro MCP exposes frame data as SVG (canvas_read_as_svg) and has no frame→PNG export.
 // board_preview_read returns SVG for the preview UI only. image_* tools only read image
 // widgets already on the board. This script is the local fallback: one file, one dependency
-// (@resvg/resvg-js). Mermaid widgets shell out to npx @mermaid-js/mermaid-cli when present.
+// (@resvg/resvg-js). Sequence diagrams are drawn in this file. Other Mermaid widgets
+// fall back to npx @mermaid-js/mermaid-cli, which needs a browser.
 //
 // Usage:
 //   node frame-to-png.mjs INPUT OUTPUT.png [--frame ID] [--scale 2] [--svg-out FILE] [--title]
@@ -15,7 +16,7 @@
 //   2  PNG written, some elements were skipped or approximated (see warnings)
 //   3  bad input (no frame, unreadable file)
 //   4  renderer missing: run `npm install --prefix <this folder>`
-//   5  a Mermaid diagram widget could not be rendered (mermaid-cli failed)
+//   5  a diagram widget could not be rendered (no PNG is written)
 
 import { readFileSync, writeFileSync, existsSync, mkdtempSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -498,6 +499,8 @@ function itemSvg(it) {
       return textBlock({ markup: it.body, x: it.x, y: it.y, w: it.w, h: it.h || 1, fontSize: it.fontSize, color: it.fill, weight: it.fontWeight, family: it.fontFamily, align: it.align, valign: "top", pad: 0 });
     case "mermaidImage":
       return `<image x="${it.x}" y="${it.y}" width="${it.w}" height="${it.h}" href="data:image/png;base64,${it.b64}"/>`;
+    case "mermaidSvg":
+      return `<g transform="translate(${it.x},${it.y}) scale(${it.scale})">${it.svg}</g>`;
     default:
       return "";
   }
@@ -607,6 +610,219 @@ function pngSize(buf) {
   return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
 }
 
+// The sequence subset from notation.md, drawn here so a sandbox without Chrome
+// still gets a diagram in the PNG. Anything else returns null and falls back.
+function renderSequence(source) {
+  const lines = source.replace(/^\uFEFF/, "").trim().split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith("%%"));
+  if (!lines.length || !/^sequenceDiagram\b/.test(lines[0])) return null;
+  const participants = [];
+  const events = [];
+  let autonumber = false;
+  const known = (id) => participants.some((p) => p.id === id);
+
+  for (let li = 1; li < lines.length; li++) {
+    const line = lines[li];
+    if (/^autonumber\b/.test(line)) {
+      if (/^autonumber\s+\d/.test(line)) return null;
+      autonumber = true;
+      continue;
+    }
+    let m = line.match(/^(actor|participant)\s+(\w+)(?:\s+as\s+(.+))?$/);
+    if (m) {
+      if (known(m[2])) return null;
+      participants.push({ id: m[2], name: (m[3] || m[2]).trim(), actor: m[1] === "actor" });
+      continue;
+    }
+    m = line.match(/^(activate|deactivate)\s+(\w+)$/);
+    if (m) {
+      if (!known(m[2])) return null;
+      events.push({ kind: m[1], id: m[2] });
+      continue;
+    }
+    if (/^(alt|opt|loop|par|break|critical)\b/.test(line)) {
+      const op = line.split(/\s+/)[0];
+      events.push({ kind: "open", op, label: line.slice(op.length).trim() });
+      continue;
+    }
+    if (/^rect\b/.test(line)) {
+      events.push({ kind: "open", op: "rect", label: "" });
+      continue;
+    }
+    m = line.match(/^(else|and|option)\b\s*(.*)$/);
+    if (m) {
+      events.push({ kind: "divider", label: m[2].trim() });
+      continue;
+    }
+    if (line === "end") {
+      events.push({ kind: "end" });
+      continue;
+    }
+    m = line.match(/^Note\s+(?:over|left of|right of)\s+([^:]+):\s*(.*)$/i);
+    if (m) {
+      const ids = m[1].split(",").map((s) => s.trim()).filter(Boolean);
+      if (!ids.length || ids.some((id) => !known(id))) return null;
+      events.push({ kind: "note", ids, text: m[2].replace(/<br\s*\/?>/gi, " ").trim() });
+      continue;
+    }
+    m = line.match(/^(\w+)\s*(-->>|->>|-\)|-x)\s*([+-])?\s*(\w+)\s*:\s*(.*)$/);
+    if (!m || !known(m[1]) || !known(m[4])) return null;
+    const arrow = m[2] === "-->>" ? "reply" : m[2] === "-)" ? "async" : m[2] === "-x" ? "lost" : "call";
+    events.push({ kind: "msg", from: m[1], to: m[4], arrow, act: m[3] || "", text: m[5].trim() });
+  }
+  if (!participants.length) return null;
+  let depth = 0;
+  for (const e of events) {
+    if (e.kind === "open") depth++;
+    else if (e.kind === "end") depth--;
+    if (depth < 0) return null;
+  }
+  if (depth !== 0) return null;
+
+  const colW = 220;
+  const pad = 36;
+  const top = 96;
+  const rowH = 52;
+  const indexed = participants.map((p, i) => ({ ...p, cx: pad + colW * i + colW / 2 }));
+  const byId = Object.fromEntries(indexed.map((p) => [p.id, p]));
+  const W = pad * 2 + participants.length * colW;
+
+  let y = top + 20;
+  const rows = events.map((e) => {
+    const row = { ...e, y };
+    if (e.kind !== "activate" && e.kind !== "deactivate") y += rowH;
+    return row;
+  });
+  const H = y + 28;
+
+  const boxes = [];
+  const lifelines = [];
+  const bars = [];
+  const marks = [];
+  const stack = [];
+  for (const e of rows) {
+    if (e.kind === "open") stack.push({ y: e.y - 18, label: e.label, op: e.op, dividers: [] });
+    else if (e.kind === "divider" && stack.length) stack[stack.length - 1].dividers.push(e);
+    else if (e.kind === "end" && stack.length) {
+      const b = stack.pop();
+      boxes.push({ ...b, y2: e.y + 10, depth: stack.length });
+    }
+  }
+
+  const parts = [];
+  for (const b of boxes) {
+    const x = pad - 16 + b.depth * 10;
+    const w = W - (pad - 16) * 2 - b.depth * 20;
+    const h = Math.max(18, b.y2 - b.y);
+    parts.push(`<rect x="${x}" y="${b.y}" width="${w}" height="${h}" fill="#f7f7f7" stroke="#757575" stroke-width="1"/>`);
+    const tab = `${b.op}${b.label ? " [" + b.label + "]" : ""}`;
+    const tw = Math.min(w - 2, tab.length * 7 + 16);
+    parts.push(`<rect x="${x}" y="${b.y}" width="${tw}" height="18" fill="#ffffff" stroke="#757575" stroke-width="1"/>`);
+    parts.push(`<text x="${x + 6}" y="${b.y + 13}" font-family="Arial, sans-serif" font-size="12" fill="#1a1a1a">${escapeXml(tab)}</text>`);
+    for (const d of b.dividers) {
+      parts.push(`<line x1="${x}" y1="${d.y}" x2="${x + w}" y2="${d.y}" stroke="#757575" stroke-width="1" stroke-dasharray="4 3"/>`);
+      if (d.label) parts.push(`<text x="${x + 8}" y="${d.y + 14}" font-family="Arial, sans-serif" font-size="12" fill="#595959">${escapeXml("[" + d.label + "]")}</text>`);
+    }
+  }
+
+  for (const p of indexed) {
+    lifelines.push(`<line x1="${p.cx}" y1="${top}" x2="${p.cx}" y2="${H - 12}" stroke="#313131" stroke-width="1" stroke-dasharray="6 4"/>`);
+  }
+
+  const active = {};
+  for (const e of rows) {
+    if (e.kind === "activate") (active[e.id] = active[e.id] || []).push(e.y);
+    else if (e.kind === "deactivate") {
+      const s = (active[e.id] || []).pop();
+      if (s != null) bars.push({ id: e.id, y1: s, y2: e.y });
+    } else if (e.kind === "msg" && e.act === "+") (active[e.to] = active[e.to] || []).push(e.y);
+    else if (e.kind === "msg" && e.act === "-") {
+      const s = (active[e.from] || []).pop();
+      if (s != null) bars.push({ id: e.from, y1: s, y2: e.y });
+    }
+  }
+  for (const [id, starts] of Object.entries(active)) {
+    for (const s of starts) bars.push({ id, y1: s, y2: H - 12 });
+  }
+  for (const b of bars) {
+    const p = byId[b.id];
+    lifelines.push(`<rect x="${p.cx - 5}" y="${b.y1}" width="10" height="${Math.max(8, b.y2 - b.y1)}" fill="#e7e7e7" stroke="#313131" stroke-width="1"/>`);
+  }
+
+  const head = (x1, y0, x2, open) => {
+    const dir = x2 >= x1 ? 1 : -1;
+    const ax = x2 - dir * 10;
+    if (open) return `<polyline points="${ax},${y0 - 5} ${x2},${y0} ${ax},${y0 + 5}" fill="none" stroke="#313131" stroke-width="1.5"/>`;
+    return `<polygon points="${x2},${y0} ${ax},${y0 - 4} ${ax},${y0 + 4}" fill="#313131"/>`;
+  };
+  const wrapLabel = (text) => {
+    const max = 32;
+    if (text.length <= max) return [text];
+    const cut = text.lastIndexOf(" ", max);
+    const i = cut > 10 ? cut : max;
+    const rest = text.slice(i).trim();
+    return rest ? [text.slice(0, i).trim(), rest] : [text];
+  };
+  let step = 0;
+  for (const e of rows) {
+    if (e.kind === "note") {
+      const xs = e.ids.map((id) => byId[id].cx);
+      const x1 = Math.min(...xs) - 80;
+      const x2 = Math.max(...xs) + 80;
+      marks.push(`<rect x="${x1}" y="${e.y - 16}" width="${x2 - x1}" height="32" fill="#fff6b6" stroke="#af7e04" stroke-width="1"/>`);
+      marks.push(`<text x="${(x1 + x2) / 2}" y="${e.y + 4}" font-family="Arial, sans-serif" font-size="13" fill="#574900" text-anchor="middle">${escapeXml(e.text)}</text>`);
+      continue;
+    }
+    if (e.kind !== "msg") continue;
+    const a = byId[e.from];
+    const b = byId[e.to];
+    const lines = wrapLabel((autonumber ? `${++step} ` : "") + e.text);
+    const labelY = e.y - 8 - (lines.length - 1) * 15;
+    const writeLabel = (x, anchor) => {
+      lines.forEach((line, i) => {
+        marks.push(`<text x="${x}" y="${labelY + i * 15}" font-family="Arial, sans-serif" font-size="13" fill="#1a1a1a" text-anchor="${anchor}">${escapeXml(line)}</text>`);
+      });
+    };
+    if (a.id === b.id) {
+      marks.push(`<path d="M ${a.cx} ${e.y - 12} h 36 v 24 h -36" fill="none" stroke="#313131" stroke-width="1.5"/>`);
+      marks.push(head(a.cx + 36, e.y + 12, a.cx, false));
+      writeLabel(a.cx + 42, "start");
+      continue;
+    }
+    const dash = e.arrow === "reply" ? ` stroke-dasharray="6 4"` : "";
+    marks.push(`<line x1="${a.cx}" y1="${e.y}" x2="${b.cx}" y2="${e.y}" stroke="#313131" stroke-width="1.5"${dash}/>`);
+    if (e.arrow === "lost") {
+      marks.push(`<path d="M ${b.cx - 5} ${e.y - 5} l 10 10 M ${b.cx - 5} ${e.y + 5} l 10 -10" fill="none" stroke="#313131" stroke-width="1.5"/>`);
+    } else marks.push(head(a.cx, e.y, b.cx, e.arrow === "async"));
+    writeLabel((a.cx + b.cx) / 2, "middle");
+  }
+
+  for (const p of indexed) {
+    if (p.actor) {
+      const hy = 22;
+      marks.push(`<circle cx="${p.cx}" cy="${hy}" r="10" fill="#ffffff" stroke="#313131" stroke-width="2"/>`);
+      marks.push(`<line x1="${p.cx}" y1="${hy + 10}" x2="${p.cx}" y2="${hy + 28}" stroke="#313131" stroke-width="2"/>`);
+      marks.push(`<line x1="${p.cx - 12}" y1="${hy + 18}" x2="${p.cx + 12}" y2="${hy + 18}" stroke="#313131" stroke-width="2"/>`);
+      marks.push(`<line x1="${p.cx}" y1="${hy + 28}" x2="${p.cx - 10}" y2="${hy + 44}" stroke="#313131" stroke-width="2"/>`);
+      marks.push(`<line x1="${p.cx}" y1="${hy + 28}" x2="${p.cx + 10}" y2="${hy + 44}" stroke="#313131" stroke-width="2"/>`);
+      marks.push(`<text x="${p.cx}" y="84" font-family="Arial, sans-serif" font-size="14" fill="#1a1a1a" text-anchor="middle">${escapeXml(p.name)}</text>`);
+    } else {
+      const bw = Math.min(colW - 28, Math.max(108, p.name.length * 8 + 20));
+      marks.push(`<rect x="${p.cx - bw / 2}" y="20" width="${bw}" height="36" rx="6" fill="#ffffff" stroke="#313131" stroke-width="2"/>`);
+      marks.push(`<text x="${p.cx}" y="43" font-family="Arial, sans-serif" font-size="14" fill="#1a1a1a" text-anchor="middle">${escapeXml(p.name)}</text>`);
+    }
+  }
+
+  return { w: W, h: H, svg: parts.concat(lifelines, marks).join("\n") };
+}
+
+function placeDiagram(it, drawn) {
+  const fx = it.frame ? it.frame.x : 0;
+  const availW = Math.max(200, it.frame ? fx + it.frame.w - 64 - it.x : it.w);
+  const availH = Math.max(160, it.frame ? it.frame.y + it.frame.h - 200 - it.y : it.h);
+  const f = Math.min(availW / drawn.w, availH / drawn.h, 2);
+  return { kind: "mermaidSvg", x: it.x, y: it.y, scale: f, svg: drawn.svg };
+}
+
 function renderMermaid(it) {
   const dir = mkdtempSync(join(tmpdir(), "miro-mmd-"));
   const inFile = join(dir, "diagram.mmd");
@@ -642,13 +858,26 @@ let mermaidFailed = false;
 const finalItems = [];
 for (const it of drawItems) {
   if (it.kind === "mermaid") {
-    const img = renderMermaid(it);
-    if (!img) { mermaidFailed = true; continue; }
-    finalItems.push(img);
+    const drawn = renderSequence(it.source);
+    let placed = null;
+    if (drawn) {
+      placed = placeDiagram(it, drawn);
+      console.log(`sequence diagram rendered in-process (${Math.round(drawn.w)}x${Math.round(drawn.h)})`);
+    } else {
+      const img = renderMermaid(it);
+      if (!img) mermaidFailed = true;
+      else placed = img;
+    }
+    if (!placed) continue;
+    finalItems.push(placed);
     const mmdPath = outputPath.replace(/\.png$/i, "") + ".mmd";
     writeFileSync(mmdPath, it.source);
     console.log(`mermaid source written to ${mmdPath}`);
   } else finalItems.push(it);
+}
+if (mermaidFailed) {
+  console.error("refusing to write a PNG that omits the diagram");
+  process.exit(5);
 }
 
 // ---------- compose ----------

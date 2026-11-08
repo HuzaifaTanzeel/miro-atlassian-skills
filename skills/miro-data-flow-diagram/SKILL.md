@@ -4,13 +4,17 @@ description: Draw or update a data flow diagram on a Miro board (Gane-Sarson sym
 license: MIT
 compatibility: Needs Miro MCP (https://mcp.miro.com/) with canvas_* tools; Atlassian MCP optional for the workspace map.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   suite: miro-atlassian-skills
 ---
 
 # Data flow diagram on Miro
 
 One DFD level per frame. Answer: **where does data come from, what changes it, where is it kept, where does it go?** Trust boundaries mark control-zone crossings.
+
+## Call budget
+
+Follow this file in order. Open a reference only at the step that names it. Do not list this folder or read every reference first, and do not open another skill until its own workflow starts. Call tools by the names in `references/tool-map.md`; do not search the registry for them. Map reads start at `detail="summary"`.
 
 ## Workflow
 
@@ -48,7 +52,7 @@ Wait for yes unless already approved. If notation.md rule 9 budget breaks, propo
 
 ### 4. Load Miro guidance
 
-Once per chat: `canvas_get_canvas_composer_skill` (`design`, then `dsl`), then `canvas_load_format_skill` with `format_name="diagramming"` and `notation="free_form"`. Hand-assemble (no Mermaid for DFDs).
+Once per chat: `canvas_get_canvas_composer_skill` with `step="dsl"` only. Do not call `step="design"` or `canvas_load_format_skill`. Hand-assemble (no Mermaid for DFDs). Do not `canvas_read_as_svg` after a create that listed no failed items.
 
 ### 5. Place and build
 

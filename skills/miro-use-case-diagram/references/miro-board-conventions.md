@@ -6,12 +6,11 @@ Where this file and Miro's live guidance disagree on **notation** (e.g. dashed Â
 
 ## 1. Load Miro's guidance once per chat
 
-Before the first `canvas_create_from_svg` or `canvas_update_from_svg`:
+Before the first `canvas_create_from_svg` or `canvas_update_from_svg`, call `canvas_get_canvas_composer_skill` once with `step="dsl"`. Do not call `step="design"`. Bright Paper, its reflection questions, and its pigments do not apply here. This file wins on frame layout; the skill's `notation.md` wins on notation.
 
-1. `canvas_get_canvas_composer_skill` with `step="design"`, then `step="dsl"`. Skip `design` reflection questions that do not fit a technical diagram.
-2. `canvas_load_format_skill` with `format_name="diagramming"` and your skill's notation (`free_form` for use case and data flow, `uml_sequence` for sequence).
+Do not call `canvas_load_format_skill` for a use case, sequence, or data flow diagram. Those skills already carry the notation, and that tool's color rules do not apply. Call it only for a notation this suite does not specify.
 
-Reuse for every diagram of that type in the chat. Set `invocation_source="skill"` on every Miro call that accepts it.
+Reuse the dsl result for every diagram in the chat. Set `invocation_source="skill"` on every Miro call that accepts it. Do not `canvas_read_as_svg` after a create that listed no failed items; check your checklist against the SVG you sent and `result_svg`.
 
 ## 2. Board and frame
 
@@ -76,6 +75,6 @@ Keep header and footer short. No emojis, decorative Unicode, or em dashes in boa
 
 ## 8. After drawing: record it
 
-- Write or update the frame row in the map (`map-contract.md`) in the same task.
+- Write or update the frame row in the map (`map-contract.md`) once, at the end of the task. When the same task also publishes the frame, leave that write to the publish step so the page id and the frame id land together.
 - Report: frame title, link `https://miro.com/app/board/<boardId>/?moveToWidget=<frameId>`, element counts, `UNKNOWN/VERIFY` items.
 - Offer one line: "Publish this to Confluence?" (`miro-to-confluence`). Do not publish unasked.

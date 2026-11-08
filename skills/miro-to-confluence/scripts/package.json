@@ -2,7 +2,7 @@
   "name": "miro-to-confluence-scripts",
   "version": "0.1.0",
   "private": true,
-  "description": "Fallback: converts a Miro canvas-composer SVG frame into a standalone SVG and PNG when Miro MCP has no frame PNG export.",
+  "description": "Converts a Miro canvas-composer SVG frame into a standalone SVG and PNG. Sequence diagrams are drawn in-process; other Mermaid types fall back to mermaid-cli.",
   "type": "module",
   "license": "MIT",
   "engines": {
