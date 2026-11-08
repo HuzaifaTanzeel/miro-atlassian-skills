@@ -43,7 +43,7 @@ Cursor: marketplace plugins, or put both URLs in `.cursor/mcp.json`. Claude Code
 npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill '*'
 ```
 
-Add `-g` for every project. On Claude.ai there is no `npx`: download the repo, zip each `skills/<name>/` folder so `SKILL.md` is at the zip root, and upload each as a custom skill.
+Add `-g` for every project. On Claude.ai there is no `npx`: download each zip from [`claude-upload/`](claude-upload/) and upload it as a custom skill. `SKILL.md` is already at the root of the zip. A merge to `main` that changes `skills/` replaces those zips.
 
 **Setup prompt** (new chat, both connectors signed in):
 

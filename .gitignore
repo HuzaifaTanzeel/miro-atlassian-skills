@@ -11,8 +11,11 @@ node_modules/
 *.frame.svg
 out/
 
-# Temp dump for uploading skills to Claude (delete when done)
-claude-upload/
+# Claude.ai upload zips. The pack workflow commits claude-upload/*.zip and overwrites them.
+# Anything else dropped in that folder stays local. Hand-made zips next to a skill stay local too.
+claude-upload/*
+!claude-upload/*.zip
+skills/*.zip
 
 # OS / editor
 .DS_Store
