@@ -1,6 +1,6 @@
 # Sequence diagram notation
 
-Contents: [What a sequence diagram is for](#what-a-sequence-diagram-is-for) · [Participants](#participants) · [Messages](#messages) · [Activations](#activations) · [Combined fragments](#combined-fragments) · [Notes](#notes) · [Mermaid limits on Miro](#mermaid-limits-on-miro) · [Budgets](#budgets) · [Checklist](#checklist) · [Notation](#notation) · [Widget and layout](#widget-and-layout) · [Record](#record)
+Contents: [What a sequence diagram is for](#what-a-sequence-diagram-is-for) ï¿½ [Participants](#participants) ï¿½ [Messages](#messages) ï¿½ [Activations](#activations) ï¿½ [Combined fragments](#combined-fragments) ï¿½ [Notes](#notes) ï¿½ [Mermaid limits on Miro](#mermaid-limits-on-miro) ï¿½ [Budgets](#budgets) ï¿½ [Checklist](#checklist) ï¿½ [Notation](#notation) ï¿½ [Widget and layout](#widget-and-layout) ï¿½ [Record](#record)
 
 Paraphrased from UML 2.5.1 clause 17 (Interactions). Mermaid syntax adapted from the Mermaid documentation (MIT). Budgets adapted from Miro's `miro-code-explain-on-board` skill (MIT). See `CREDITS.md`.
 
@@ -82,20 +82,11 @@ Do not use: `box`, `create`/`destroy`, bidirectional arrows `<<->>`, half arrows
 
 ## Checklist
 
-Run this against the source you sent and the `result_svg` before you report done.
+Run against the source you sent and the `result_svg` before you report done. The messages, activations, fragments, Mermaid-limits, and budgets sections above all apply. Extra checks:
 
-## Notation
-
-- [ ] Frame title starts with `[SEQ] ` and names one scenario.
-- [ ] `autonumber` is on.
-- [ ] The initiating actor is the leftmost participant. Data stores and external systems are on the right.
-- [ ] Humans are `actor`, everything else is `participant`. Every participant sends or receives at least one message.
-- [ ] Every call has a reply when the caller waits for one, and every reply says what comes back.
-- [ ] No vague labels (*uses, handles, processes, manages, sends data, OK, response*).
-- [ ] Every activation is closed. No `-` deactivation on replies in more than one `alt` branch.
-- [ ] Fragments nest at most two deep. Guards are written as conditions.
-- [ ] Only Mermaid 10 syntax listed in `notation.md` ("Mermaid limits on Miro").
-- [ ] Within budget: at most 8 participants and 20 messages, or split.
+- [ ] Frame title starts with `[SEQ] ` and names one scenario. `autonumber` is on.
+- [ ] Initiating actor leftmost; data stores and external systems rightmost. Humans are `actor`, everything else `participant`; none is idle.
+- [ ] Every call has a reply when the caller waits, and every reply says what comes back. No vague labels (*uses, handles, processes, manages, sends data, OK, response*).
 
 ## Widget and layout
 

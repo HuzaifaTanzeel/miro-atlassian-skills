@@ -69,20 +69,7 @@ Check every one before you build. Each is a classic DFD error with a name.
 
 ## Checklist
 
-Run the model checks before you build, and the style checks against the `result_svg` before you report done.
-
-## Model (before building)
-
-- [ ] Level is clear: `[DFD-0]` has exactly one process `0` and no data stores; `[DFD-1]` has processes `1.0` to `n.0`.
-- [ ] No entity-to-entity, store-to-store, or entity-to-store flow.
-- [ ] Every process has at least one input and one output (no black holes, no miracles).
-- [ ] Every store is both written and read somewhere, or the legend says where.
-- [ ] Level 1 balances with the context diagram: same entities, same flow names.
-- [ ] Process names are verb + object. Flow and store names are nouns. No vague verbs on flows.
-- [ ] Two-way exchanges between the same pair are one connector with `data-arrow="both"`.
-- [ ] Trust boundaries drawn where privilege, ownership, network, tenant, or jurisdiction changes. No element is cut by a boundary.
-- [ ] `[PD]`, `[SPD]`, `[X-border]` markers only where the source says so; unknowns listed as `UNKNOWN/VERIFY`.
-- [ ] Within budget: at most 7 processes, 8 entities, 6 stores, about 20 flows.
+Check rules 1 to 10 and the level table before you build (the model), and the items below against the `result_svg` before you report done. Also: level is clear (`[DFD-0]` has exactly one process `0` and no stores; `[DFD-1]` has `1.0` to `n.0`); two-way exchanges are one connector with `data-arrow="both"`; `[PD]`, `[SPD]`, `[X-border]` only where the source says so, unknowns as `UNKNOWN/VERIFY`.
 
 ## Style (after building)
 
