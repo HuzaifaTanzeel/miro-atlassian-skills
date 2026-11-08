@@ -1,6 +1,6 @@
 # Publish steps
 
-Tool names are in `tool-map.md`. `cloudId` comes from the config or the map header. Operations marked "executeRead" or "executeWrite" are called through that Atlassian tool with `cloudId` as a top-level argument, next to `name` and `inputs`.
+Core tool names are in `tool-map.md`; attachment, copy, space, and format-guide operations are named in the steps below. `cloudId` comes from the config or the map header. Operations marked "executeRead" or "executeWrite" are called through that Atlassian tool with `cloudId` as a top-level argument, next to `name` and `inputs`.
 
 ## 1. Resolve
 
