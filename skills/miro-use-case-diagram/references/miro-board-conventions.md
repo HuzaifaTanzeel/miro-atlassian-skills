@@ -19,7 +19,7 @@ Reuse the dsl result for every diagram in the chat. Set `invocation_source="skil
 - **Title prefix** (tags are not returned by the canvas tools): `[UC]` use case, `[SEQ]` sequence, `[DFD-0]` context, `[DFD-1]`/`[DFD-2]` level 1 or below.
 - **Size.** 1600 x 1200 (standard) or 2400 x 1600 (large, only near the element budget). Fill `#ffffff`. Padding 64.
 - **Placement.** Non-empty board: one `canvas_search` with `result_mode="overview"`, take the right-most frame, place the new frame 320 px to its right, same top edge. Empty board: `translate(0,0)`. No auto-placement.
-- Coordinates inside the frame are frame-relative.
+- Coordinates inside the frame are frame-relative. A read wraps the frame in `<g transform="translate(x,y)">`; positions inside that group are still frame-local. An SVG saved for export starts at 0,0, without that outer translate.
 
 ## 3. Fixed regions inside every frame
 
@@ -53,6 +53,7 @@ Keep header and footer short. No emojis, decorative Unicode, or em dashes in boa
 ## 5. Connectors
 
 - Every relationship is a `<line>` with `data-start`/`data-end` naming local ids of shapes (never a frame, connector, or text widget).
+- `canvas_read_as_svg` connector endpoints are not reliable coordinates. Place each connector from the sides of the shapes it joins.
 - List connectors **after** every shape they join.
 - Pin `data-start-side`/`data-end-side` to facing edges. One routing style per frame: `straight` (use case), `elbowed` (data flow).
 - Labels in `data-content`, specific. Never: *uses, contains, relates, has, supports, manages, integrates*. If unnamed, write `UNKNOWN` and add `UNKNOWN/VERIFY` to the legend.

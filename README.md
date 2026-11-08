@@ -162,7 +162,7 @@ Resync the workspace map.
 | [`miro-data-flow-diagram`](skills/miro-data-flow-diagram/SKILL.md) | Where data comes from, what changes it, where it is kept. |
 | [`miro-to-confluence`](skills/miro-to-confluence/SKILL.md) | That frame on a Confluence page as a PNG plus a short description. |
 
-Miro's connector does not export a frame as PNG. On Cursor and Claude Code the publish skill runs `frame-to-png.mjs` and installs its renderer on the first run. On Claude.ai, export the frame as PNG from Miro and attach it in the chat. The page gets that PNG and text.
+Miro's connector does not export a frame as PNG. The publish skill runs `frame-to-png.mjs` and installs its renderer on the first run. Cursor and Claude Code upload that PNG as a page attachment. On the Claude free plan the shell cannot reach the Confluence host, so the same PNG is placed inline in the page instead. That copy is not a true attachment. If the inline write does not land, the skill gives you the PNG to drag onto the page.
 
 After the map exists you can turn unused tools off. Keep Miro `canvas_*`, `canvas_search`, and `board_search_boards`, and Atlassian `getConfluenceContent`, `updateConfluenceContent`, `createConfluenceContent`, `searchConfluence`, `discover`, `executeRead`, and `executeWrite`.
 
