@@ -1,85 +1,30 @@
 # miro-atlassian-skills
 
 <p align="center">
-  <img src="docs/img/banner-3-split.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
+  <img src="docs/img/banner-image.svg" alt="Miro board skills flowing to Atlassian Confluence" width="100%"/>
 </p>
 
 Draw a use case, sequence, or data-flow diagram on Miro, then put the picture on a Confluence page. Five [Agent Skills](https://agentskills.io) share one index of your pages and frames, so the agent opens them by id.
 
-Works with Cursor, Claude Code, Claude.ai, and any other agent the [skills CLI](https://skills.sh) installs. Miro draws the diagram. Atlassian holds the index and the published page.
+Works with Cursor, Claude Code, Claude.ai, and any other agent the [skills CLI](https://skills.sh) installs.
+
+## Install
+
+Node.js 20 or newer. The command installs all five skills and asks which agents to use.
 
 ```bash
 npx skills add HuzaifaTanzeel/miro-atlassian-skills
 ```
 
-![Use case example](docs/img/use-case-example.png)
-
-## Install
-
-Node.js 20 or newer. Install all five: `workspace-map`, `miro-use-case-diagram`, `miro-sequence-diagram`, `miro-data-flow-diagram`, `miro-to-confluence`. The diagram skills and publishing share `workspace-map`.
-
-**This project**
+Add `-g` to install for every project. Later, update with the same flag you installed with:
 
 ```bash
-npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill '*' -y
-```
-
-**Every project**
-
-```bash
-npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill '*' -g -y
-```
-
-**One agent.** Add `-a cursor`, `-a claude-code`, or both. This one is global, for Cursor and Claude Code:
-
-```bash
-npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill '*' -g -a cursor -a claude-code -y
-```
-
-**One skill**
-
-```bash
-npx skills add HuzaifaTanzeel/miro-atlassian-skills --skill miro-sequence-diagram -y
-```
-
-**List what the repo contains, without installing**
-
-```bash
-npx skills add HuzaifaTanzeel/miro-atlassian-skills --list
-```
-
-A project install lands in `.agents/skills/` (Cursor) or `.claude/skills/` (Claude Code). `-g` lands in `~/.cursor/skills/` or `~/.claude/skills/`.
-
-Claude Code can also install the set as a plugin:
-
-```text
-/plugin marketplace add HuzaifaTanzeel/miro-atlassian-skills
-/plugin install miro-atlassian-skills@miro-atlassian-skills
-```
-
-## Update, list, remove
-
-`update` reinstalls only skills whose files changed. Use `-g` when that is how you installed.
-
-```bash
-npx skills check
 npx skills update -y
 ```
 
-```bash
-npx skills list
-npx skills list -g
-```
-
-```bash
-npx skills remove HuzaifaTanzeel/miro-atlassian-skills -y
-```
-
-Global update or remove: add `-g`, for example `npx skills update -g -y`.
-
 ## Claude.ai
 
-Claude.ai has no `npx`. Download one zip per skill from the [Claude skill zips](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest) release and upload it. Each zip contains `<skill-name>/SKILL.md`. A pull request does not contain these files. After the security checks pass and the pull request merges, `main` rebuilds the release and replaces the previous zips.
+Claude.ai has no `npx`. Download one zip per skill from the [Claude skill zips](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest) release and upload it. Each zip contains `<skill-name>/SKILL.md`.
 
 | Skill | Download |
 |---|---|
@@ -89,11 +34,7 @@ Claude.ai has no `npx`. Download one zip per skill from the [Claude skill zips](
 | Data flow diagram | [miro-data-flow-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/miro-data-flow-diagram.zip) |
 | Publish to Confluence | [miro-to-confluence.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/miro-to-confluence.zip) |
 
-1. Settings → Capabilities. Turn on **Code execution and file creation**. On Team and Enterprise, an owner turns that on, and Skills, under Organization settings → Plugins & skills → Policy.
-2. Customize → Skills → **+** → **Create skill** → **Upload a skill**.
-3. Choose the zip and turn the skill on.
-
-When a newer release is published, upload the zip again. Claude replaces the skill of the same name.
+Customize → Skills → **+** → **Create skill** → **Upload a skill**. Turn on **Code execution and file creation** under Settings → Capabilities first. On Team and Enterprise, an owner enables that under Organization settings → Plugins & skills. When a newer release is published, upload the zip again.
 
 ## Connect Miro and Atlassian
 
@@ -143,17 +84,6 @@ Set up miro-atlassian-skills for this workspace. I have signed in to the Miro an
 7. Report counts (pages, folders, templates, boards, frames) and any diagram-target rows I should fill. Then stop. Do not draw a diagram until I ask.
 ```
 
-## What to say next
-
-```text
-Draw a use case diagram for a customer uploading evidence and a reviewer accepting it.
-Draw a sequence diagram for closing a remediation issue after a retest.
-Draw a context data flow diagram for that same evidence upload, and mark the trust boundary.
-Publish the sequence diagram to the Sequence Diagrams page.
-Where is the workspace map?
-Resync the workspace map.
-```
-
 | Skill | Use it when you want |
 |---|---|
 | [`workspace-map`](skills/workspace-map/SKILL.md) | The index built, refreshed, or a page or frame found by name. |
@@ -162,9 +92,7 @@ Resync the workspace map.
 | [`miro-data-flow-diagram`](skills/miro-data-flow-diagram/SKILL.md) | Where data comes from, what changes it, where it is kept. |
 | [`miro-to-confluence`](skills/miro-to-confluence/SKILL.md) | That frame on a Confluence page as a PNG plus a short description. |
 
-Miro's connector does not export a frame as PNG. The publish skill runs `frame-to-png.mjs` and installs its renderer on the first run. Cursor and Claude Code upload that PNG as a page attachment. On the Claude free plan the shell cannot reach the Confluence host, so the same PNG is placed inline in the page instead. That copy is not a true attachment. If the inline write does not land, the skill gives you the PNG to drag onto the page.
-
-After the map exists you can turn unused tools off. Keep Miro `canvas_*`, `canvas_search`, and `board_search_boards`, and Atlassian `getConfluenceContent`, `updateConfluenceContent`, `createConfluenceContent`, `searchConfluence`, `discover`, `executeRead`, and `executeWrite`.
+Cursor and Claude Code upload the PNG as a page attachment. On the Claude free plan the shell cannot reach Confluence, so the PNG is placed inline in the page instead.
 
 ## License
 
