@@ -8,8 +8,6 @@ Draw a use case, sequence, or data-flow diagram on Miro, then put the picture on
 
 Works with Cursor, Claude Code, Claude.ai, and any other agent the [skills CLI](https://skills.sh) installs.
 
-![Use case example](docs/img/use-case-example.png)
-
 ## Install
 
 Node.js 20 or newer. The command installs all five skills and asks which agents to use.
@@ -84,15 +82,6 @@ Set up miro-atlassian-skills for this workspace. I have signed in to the Miro an
 5. Ask before creating the page, then create "Workspace map" where I said, and put the map in it.
 6. If this environment can write files, also write miro-atlassian.config.yaml in the project root, .miro-atlassian/workspace-map.md, and add .miro-atlassian/ to .gitignore. If there is no project folder (Claude.ai), skip local files and give me one line to paste into Project instructions: "Workspace map: Confluence page <id> <url>. Read it before searching Confluence or Miro."
 7. Report counts (pages, folders, templates, boards, frames) and any diagram-target rows I should fill. Then stop. Do not draw a diagram until I ask.
-```
-
-## What to say next
-
-```text
-Draw a use case diagram for a customer uploading evidence and a reviewer accepting it.
-Draw a sequence diagram for closing a remediation issue after a retest.
-Draw a context data flow diagram for that same evidence upload, and mark the trust boundary.
-Publish the sequence diagram to the Sequence Diagrams page.
 ```
 
 | Skill | Use it when you want |
