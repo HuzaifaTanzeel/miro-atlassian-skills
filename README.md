@@ -79,21 +79,21 @@ Global update or remove: add `-g`, for example `npx skills update -g -y`.
 
 ## Claude.ai
 
-Claude.ai has no `npx`. Download one zip per skill and upload it. Each zip contains `<skill-name>/SKILL.md`. The zips are committed when a pull request into `main` is opened, or when a draft is marked ready. Merging that pull request replaces the files on `main`.
+Claude.ai has no `npx`. Download one zip per skill from the [Claude skill zips](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest) release and upload it. Each zip contains `<skill-name>/SKILL.md`. A pull request does not contain these files. After the security checks pass and the pull request merges, `main` rebuilds the release and replaces the previous zips.
 
 | Skill | Download |
 |---|---|
-| Workspace map | [workspace-map.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/raw/main/claude-upload/workspace-map.zip) |
-| Use case diagram | [miro-use-case-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/raw/main/claude-upload/miro-use-case-diagram.zip) |
-| Sequence diagram | [miro-sequence-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/raw/main/claude-upload/miro-sequence-diagram.zip) |
-| Data flow diagram | [miro-data-flow-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/raw/main/claude-upload/miro-data-flow-diagram.zip) |
-| Publish to Confluence | [miro-to-confluence.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/raw/main/claude-upload/miro-to-confluence.zip) |
+| Workspace map | [workspace-map.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/workspace-map.zip) |
+| Use case diagram | [miro-use-case-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/miro-use-case-diagram.zip) |
+| Sequence diagram | [miro-sequence-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/miro-sequence-diagram.zip) |
+| Data flow diagram | [miro-data-flow-diagram.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/miro-data-flow-diagram.zip) |
+| Publish to Confluence | [miro-to-confluence.zip](https://github.com/HuzaifaTanzeel/miro-atlassian-skills/releases/latest/download/miro-to-confluence.zip) |
 
 1. Settings → Capabilities. Turn on **Code execution and file creation**. On Team and Enterprise, an owner turns that on, and Skills, under Organization settings → Plugins & skills → Policy.
 2. Customize → Skills → **+** → **Create skill** → **Upload a skill**.
 3. Choose the zip and turn the skill on.
 
-When a newer zip is on `main`, upload it again. Claude replaces the skill of the same name.
+When a newer release is published, upload the zip again. Claude replaces the skill of the same name.
 
 ## Connect Miro and Atlassian
 

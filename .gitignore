@@ -11,10 +11,9 @@ node_modules/
 *.frame.svg
 out/
 
-# Claude.ai upload zips. The pack workflow commits claude-upload/*.zip and overwrites them.
-# Anything else dropped in that folder stays local. Hand-made zips next to a skill stay local too.
-claude-upload/*
-!claude-upload/*.zip
+# Claude.ai zips are built on main and attached to the claude-skills release.
+# They are never committed, including on a pull request branch.
+claude-upload/
 skills/*.zip
 
 # OS / editor

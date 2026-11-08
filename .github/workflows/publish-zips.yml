@@ -1,0 +1,39 @@
+# After a pull request merges to main, build the Claude.ai zips and attach them
+# to the claude-skills release. Nothing is committed, and feature branches get no zips.
+# The security checks run on the pull request before that merge.
+
+name: Publish Claude skill zips
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - "scripts/pack-skills.mjs"
+      - ".github/workflows/publish-zips.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish zips
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node scripts/pack-skills.mjs
+      - name: Attach zips to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=claude-skills
+          notes="One zip per skill. Each zip contains the skill folder, with SKILL.md inside it. Built from main after the pull request checks passed."
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" claude-upload/*.zip --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$tag" claude-upload/*.zip --repo "$GITHUB_REPOSITORY" --title "Claude skill zips" --notes "$notes" --latest
+          fi
+          gh release edit "$tag" --repo "$GITHUB_REPOSITORY" --latest --notes "$notes"
