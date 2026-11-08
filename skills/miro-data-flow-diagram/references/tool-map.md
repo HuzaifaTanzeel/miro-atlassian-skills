@@ -11,6 +11,7 @@ Call the names in this table. Do not list the skill folder, search the tool regi
 | Capability | Tool or operation | Notes |
 |---|---|---|
 | Site and cloudId | `getAccessibleAtlassianResources` | Only when the config and map have no cloudId. Write it back to the config. |
+| List spaces | `listConfluenceSpaces` via executeRead | First run, when `spaceKey` is blank. Top-level `cloudId`, `inputs={status: "current", limit: 250}`. Follow the cursor. Returns key, name, and id. |
 | Search pages (CQL) | `searchConfluence` | Always scope with `space = "KEY"`. Results include excerpts. |
 | Page tree | `getConfluenceContentDescendants` via executeRead | `contentId` = space homepage id, `depth` up to 10, `limit` up to 250. Returns id, type, title, parent, depth. No dates. |
 | Read one page | `getConfluenceContent` | `detail`: `summary` (cheap), `outline`, `full`. `content_format`: `html` or `markdown`. `draft=true` before an edit gives the `snapshotToken`. |

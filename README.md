@@ -69,24 +69,33 @@ claude mcp add --transport http atlassian https://mcp.atlassian.com/v2/mcp
 
 **Claude.ai.** Settings → Connectors. Add both URLs and sign in.
 
-## Set up the workspace
+## First time
 
-New chat, both connectors signed in. Paste this once. The agent creates the config and the map. On Claude.ai, paste the "Workspace map: …" line it returns into the project instructions.
+You do not need a config file, a space key, or a board link before you start. Sign in to both connectors, open a new chat, and paste the prompt below. The agent looks through your Confluence spaces and Miro boards, asks which ones to use, and creates a Confluence page called **Workspace map**. That page is the index later chats use.
+
+**Cursor and Claude Code.** The prompt saves the files for you:
+
+- `miro-atlassian.config.yaml` in the project root
+- `.miro-atlassian/workspace-map.md`, a local copy of the same index
+
+**Claude.ai.** The chat cannot save files into your project. The prompt still creates the Confluence page, then shows a finished `miro-atlassian.config.yaml` for you to save in the project root. It also gives you one line to paste into the project's instructions, so the next chat can find the page.
 
 ```text
-Set up miro-atlassian-skills for this workspace. I have signed in to the Miro and Atlassian connectors. I do not have miro-atlassian.config.yaml or a workspace map yet. Do not ask me to write YAML or markdown by hand.
+I am using these skills for the first time. Both the Miro and Atlassian connectors are signed in. I do not have a config file or a Workspace map yet.
 
-1. From Atlassian, list the sites I can access. If there is more than one, ask which. Then list Confluence spaces on that site (key, name, id).
-2. From Miro, list my boards (name and URL).
-3. Ask me once, with numbered choices:
-   - which Confluence space
-   - which Miro board (or all my boards)
-   - where to create a page titled "Workspace map" (suggest a standards or engineering parent if one exists, otherwise the space home)
-4. After I answer: scan that space's page tree (titles and ids only, no page bodies) and the chosen board's frames. Build the map from that.
-5. Ask before creating the page, then create "Workspace map" where I said, and put the map in it.
-6. If this environment can write files, also write miro-atlassian.config.yaml in the project root, .miro-atlassian/workspace-map.md, and add .miro-atlassian/ to .gitignore. If there is no project folder (Claude.ai), skip local files and give me one line to paste into Project instructions: "Workspace map: Confluence page <id> <url>. Read it before searching Confluence or Miro."
-7. Report counts (pages, folders, templates, boards, frames) and any diagram-target rows I should fill. Then stop. Do not draw a diagram until I ask.
+1. Look through what I can already access. List my Atlassian sites. If there is more than one, ask which. Then list my Confluence spaces (name and key) and my Miro boards (name and link).
+2. Ask me once, with numbered choices: which Confluence space, which Miro board (or all of them), and where the Workspace map page should go. Use the space home if I have no preference.
+3. After I answer, explore that space and those boards. Read the page titles and how the pages are nested, and the frame titles on the boards. Do not read full page bodies.
+4. Ask before you create anything. Then create a Confluence page titled "Workspace map" in the place I chose, and put that index on the page.
+5. If you can write files in this project (Cursor or Claude Code), save them yourself:
+   - miro-atlassian.config.yaml in the project root, filled in with the site, the space, the board, and the new page id
+   - .miro-atlassian/workspace-map.md with the same index
+   - add .miro-atlassian/ to .gitignore
+6. If you cannot write files (Claude.ai), still create the Confluence page. Then show me the full miro-atlassian.config.yaml in chat so I can save it myself as miro-atlassian.config.yaml in the project root. Also give me one line to paste into Project instructions: "Workspace map: Confluence page <id> <url>. Read it before searching Confluence or Miro."
+7. Tell me how many pages and frames you indexed, then stop. Do not draw a diagram until I ask.
 ```
+
+If you already know the space and the board, name them in the same chat. The agent uses those and skips the lists. A later chat that finds no map offers this setup once, and still draws or publishes if you say no.
 
 | Skill | Use it when you want |
 |---|---|

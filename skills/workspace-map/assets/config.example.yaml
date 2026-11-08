@@ -1,6 +1,8 @@
 # miro-atlassian-skills config
-# Copy to your project root as miro-atlassian.config.yaml.
-# It holds ids, not secrets. Commit it if your team shares the same space and board.
+# Shape of miro-atlassian.config.yaml. It holds ids, not secrets.
+# Cursor and Claude Code write the filled file at the project root on first run.
+# On Claude.ai, save the filled file from chat as miro-atlassian.config.yaml in the project root.
+# Commit it if your team shares the same space and board.
 # Blank values mean "not set". Each person logs in to the MCP servers as themselves.
 
 atlassian:

@@ -4,7 +4,7 @@ description: Build, resync, or repair a shared index of Confluence pages and Mir
 license: MIT
 compatibility: Needs Atlassian MCP for Confluence; Miro MCP for Miro rows.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
   suite: miro-atlassian-skills
 ---
 
@@ -16,7 +16,7 @@ Shared index of one Confluence space and its Miro boards so later chats open pag
 
 | Request | Do |
 |---|---|
-| "Build the workspace map for space KEY" / first use | Read `references/bootstrap.md` |
+| "Set up the workspace map" / first use, including when there is no config, no map page, and no cache | Read `references/bootstrap.md` |
 | "Resync the map", "refresh since last week", pages added by hand | Read `references/delta-sync.md`; scope as named, default since `scanned` |
 | "Where is the sequence diagram page?" | Read `references/map-contract.md`; answer from the map. If no match, read `references/resolution.md` |
 | "This page moved", "that id is wrong" | Read `references/write-through.md`; fix the row |
@@ -39,8 +39,4 @@ Open only the reference the matching row names. Do not list this folder or read 
 
 ## Bootstrap in one prompt
 
-```text
-Build the workspace map for Confluence space KEY and Miro board <board URL>.
-```
-
-Ask at most one question for anything missing, ask before creating the map page, report counts at the end.
+The paste-in text is `assets/first-run-prompt.md`. Same prompt either way: when this environment can write files, save `miro-atlassian.config.yaml` at the project root and `.miro-atlassian/workspace-map.md`. When it cannot, show the filled YAML in chat for them to save at the project root. List sites, spaces, and boards, then ask once. Ask again before creating the map page. Report counts at the end. If they already named a space and a board, use those and skip the list.

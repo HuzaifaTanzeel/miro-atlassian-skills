@@ -4,7 +4,7 @@ description: Draw or update a UML sequence diagram on a Miro board as a Mermaid 
 license: MIT
 compatibility: Needs Miro MCP (https://mcp.miro.com/) with canvas_* tools and Mermaid widgets; Atlassian MCP optional for the workspace map.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
   suite: miro-atlassian-skills
 ---
 
@@ -24,7 +24,7 @@ Map: `detail="summary"` first. `detail="full"` only when the cached `mapVersion`
 
 ### 1. Resolve the target
 
-1. Page id, in order: config `map.confluencePageId`, a `Workspace map:` line in `AGENTS.md`, one CQL search `title = "Workspace map"`. Then the cheap read in the call budget. Open `references/map-contract.md` only for the write in step 6.
+1. Page id, in order: config `map.confluencePageId`, a `Workspace map:` line in `AGENTS.md`, and, only when `spaceKey` is known, one CQL search `space = "<spaceKey>" AND title = "Workspace map" AND type = page`. Then the cheap read in the call budget. None of those: the map is missing. Offer one bootstrap (`workspace-map`); it lists sites, spaces, and boards, and the user does not write a config file. If they decline, continue. Open `references/map-contract.md` only for the write in step 6.
 2. Board: request URL, else `miro.defaultBoard`, else map Miro rows. Ask once if several fit. Never create a board without an explicit yes.
 3. Updating? Use the `sequence` row's frameId. Read `references/miro-board-conventions.md` §7 only. To change Mermaid only: diagram stub with `data-miro-id` and `<edit><old>…</old><new>…</new></edit>`.
 
