@@ -12,8 +12,8 @@ The workspace map is one small index of Confluence pages and Miro frames (ids, t
 
 1. Config `map.confluencePageId`.
 2. A line in the project's `AGENTS.md` starting `Workspace map:` that names a Confluence page id.
-3. One CQL search: `space = "<spaceKey>" AND title = "Workspace map" AND type = page`.
-4. None: say the map is missing, offer one bootstrap scan (the `workspace-map` skill), and continue with a scoped search if they decline. Never block the task on the map.
+3. One CQL search when `spaceKey` is known: `space = "<spaceKey>" AND title = "Workspace map" AND type = page`. No space key: skip this search.
+4. None: say the map is missing. Offer one bootstrap (the `workspace-map` skill). It lists sites, spaces, and boards; the user does not write a config file. If they decline, continue with a scoped search. Never block the task on the map.
 
 ## Read it cheaply
 
@@ -54,4 +54,4 @@ Once, at the end of a task that created, renamed, moved, or published a page or 
 4. Write the same text to the cache and set `mapVersion` to the new page version.
 5. If the map write fails, say the user's change succeeded and the map is behind. Never undo the user's change.
 
-No map page yet: write only the cache and tell the user the row is local until the map is bootstrapped.
+No map page yet: write only the cache and tell the user the row is local until the map is bootstrapped. If this environment cannot write files, say the row was not recorded.
