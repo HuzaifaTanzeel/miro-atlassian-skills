@@ -17,6 +17,8 @@ The workspace map is one small index of Confluence pages and Miro frames (ids, t
 
 ## Read it cheaply
 
+Never start with `detail="full"`. One full read per task, and only after the summary check below. Do not read the map again until the write at the end of the task, and do not search for a title the map already lists.
+
 1. Cache exists with `mapVersion`: `getConfluenceContent` on the map page, `detail="summary"`, compare the version.
 2. Same version: use the cache. Do not read the body.
 3. Different version or no cache: read with `detail="full"`, `content_format="markdown"`, take the code block text, write it to the cache, set `mapVersion` in the cache header.

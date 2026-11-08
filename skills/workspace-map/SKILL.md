@@ -4,7 +4,7 @@ description: Build, resync, or repair a shared index of Confluence pages and Mir
 license: MIT
 compatibility: Needs Atlassian MCP for Confluence; Miro MCP for Miro rows.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   suite: miro-atlassian-skills
 ---
 
@@ -24,6 +24,8 @@ Shared index of one Confluence space and its Miro boards so later chats open pag
 | "Add this page as the home for data flow diagrams" | Update the Diagram targets table (`write-through.md`) |
 
 Starting files: `assets/config.example.yaml`, `assets/map-template.md`. Tool names: `references/tool-map.md`. First-run prompt text: `assets/first-run-prompt.md`.
+
+Open only the reference the matching row names. Do not list this folder or read the other references. Call the tool names in `tool-map.md`; do not search the registry for them.
 
 ## Principles
 

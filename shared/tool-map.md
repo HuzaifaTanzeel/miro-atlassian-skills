@@ -2,7 +2,7 @@
 
 This file is copied into each skill by `scripts/sync-shared.mjs`. Edit the copy in `shared/`.
 
-Check the live tool list once at the start of a chat. If a name below is missing, use the server's own discover operation or tool list and say in the chat which name you used. Never guess an operation name. A community `mcp-atlassian` server uses different names (`confluence_*`); read its tool list instead of this table.
+Call the names in this table. Do not list the skill folder, search the tool registry, or call `discover` to confirm them. If a call is rejected as an unknown operation, `discover` once and say which name you used. Never guess an operation name. A community `mcp-atlassian` server uses different names (`confluence_*`); read its tool list instead of this table.
 
 ## Atlassian (official remote MCP, `https://mcp.atlassian.com/v2/mcp`)
 
@@ -27,5 +27,5 @@ Other operations (space instructions, format guide, template copy, attachments) 
 | Board overview | `canvas_search` with `result_mode="overview"` | The cheap call. Once per board for placement or resync. |
 | Find one item | `canvas_search` with `result_mode="matches"` and a pattern | For a frame title when the map has no id. |
 | Read one frame | `canvas_read_as_svg` with `widget_ids=[frameId]` (or `scope_x/y/width/height` = the frame box) | Returns the frame, its contents, and connectors. Unscoped reads are rejected. |
-| Authoring guidance | `canvas_get_canvas_composer_skill` (`design`, `dsl`), `canvas_load_format_skill` | Once per chat per notation. |
+| Authoring guidance | `canvas_get_canvas_composer_skill` with `step="dsl"` | Once per chat. Do not call `step="design"`. Do not call `canvas_load_format_skill` for use case, sequence, or data flow. |
 | Create / edit | `canvas_create_from_svg` / `canvas_update_from_svg` | One SVG per frame. Edit from the latest `result_svg`. |

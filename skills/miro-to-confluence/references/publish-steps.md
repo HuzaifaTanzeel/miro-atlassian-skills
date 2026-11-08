@@ -23,7 +23,7 @@ Keep this read: the description (step 7) is written from it. Do not read the fra
 
 ## 3. Make the PNG (local fallback)
 
-Miro MCP does not export a frame as PNG. Use `scripts/frame-to-png.mjs` (Node 20+, `@resvg/resvg-js`) on the SVG from step 2. On Claude.ai (no Node), ask the user to export the frame as PNG from Miro and attach it instead.
+Miro MCP does not export a frame as PNG. Use `scripts/frame-to-png.mjs` (Node 20+, `@resvg/resvg-js`) on the SVG from step 2. Sequence diagrams are drawn in the script, with no browser. Other Mermaid types fall back to mermaid-cli, which downloads a browser once. If that download is blocked, stop and ask the user to export the frame as PNG from Miro. Do not install Chrome or Puppeteer yourself, and do not retry the download.
 
 ```text
 node <skill-dir>/scripts/frame-to-png.mjs .miro-atlassian/out/<slug>.frame.svg .miro-atlassian/out/<slug>.png --svg-out .miro-atlassian/out/<slug>.svg
@@ -31,15 +31,15 @@ node <skill-dir>/scripts/frame-to-png.mjs .miro-atlassian/out/<slug>.frame.svg .
 
 | Exit | Meaning | Do |
 |---|---|---|
-| 0 | PNG written | Continue. |
-| 2 | PNG written, some elements skipped or approximated | Continue and list the warnings in the report. |
+| 0 | PNG written, diagram included | Upload. Do not open the PNG in a browser. |
+| 2 | PNG written, some non-diagram elements skipped or approximated | Upload and list the warnings in the report. |
 | 3 | No frame in the input | Re-read with the frame id in `widget_ids`, or pass `--frame <id>`. |
 | 4 | Renderer missing | Run `npm install --prefix <skill-dir>/scripts` once, then run the script again. |
-| 5 | Mermaid could not be rendered | Show the mermaid-cli error. Usually the Mermaid text uses syntax newer than version 10; fix the frame or ask. |
+| 5 | The diagram could not be drawn | No PNG was written. Show the error. Do not upload, and do not create or edit the page. |
 
 Options: `--scale 2` (default, pixel density), `--frame <id>` (input holds several frames), `--title` (adds the frame title above the image; off by default because the frame already has a header).
 
-Open the PNG (or its SVG) once and check that it looks like the frame. For Mermaid frames the script also writes `<slug>.mmd`, which the page can show as source (see `page-layout.md`).
+A line that says `wrote …png` followed by exit code 5 is a failed run; do not upload that file. For Mermaid frames the script also writes `<slug>.mmd` on success, which the page can show as source (see `page-layout.md`).
 
 ## 4. Upload the PNG
 
@@ -52,6 +52,8 @@ If the upload fails, stop and report. Do not write the page without an image.
 
 ## 5. Check the space rules (once per space)
 
+Skip this whole step when the map header says `spaceInstructions: none` or `read`. `page-layout.md` is the HTML contract for those spaces. Do not call `getConfluenceSpace` or `getContentFormatGuide`.
+
 If the map header says `spaceInstructions: unknown`:
 
 1. `getConfluenceContent` with `detail="summary"` on the target page (or its parent) returns `metadata.hasSpaceInstructions`. If it is `false`, skip to 3. If `true`, executeRead `getConfluenceSpace` and read the instructions.
@@ -60,7 +62,7 @@ If the map header says `spaceInstructions: unknown`:
 
 ## 6. New page (only when the target is a new page)
 
-Ask first unless the user asked for a new page. Title: the frame title without the prefix, for example `Evidence a control - sequence`. Check the map for a page with that title under the parent first.
+Ask first unless the user asked for a new page. Title: the frame title without the prefix, for example `Evidence a control - sequence`. The next number and the parent come from the map (existing rows under `parentPageId`, plus `templatePageId`). Do not CQL-search those titles, and do not read the template page or a sibling diagram page.
 
 - **Template listed** (`templatePageId` in Diagram targets): executeWrite `copyConfluenceContent` with `contentId=<templatePageId>`, `title`, `parentContentId=<parentPageId>`. Then continue at step 7 with the copy as the target. Fill the template's own headings instead of adding the built-in sections.
 - **No template**: `createConfluenceContent` with `parent={spaceId, parentContentId}`, the title, and the built-in page body from `page-layout.md` with an empty figure. Upload the PNG to the new page (step 4), then fill the figure in step 7.
@@ -78,7 +80,7 @@ Ask first unless the user asked for a new page. Title: the frame title without t
    - Append a section: `{"name": "appendNodeToEnd", "value": "<h2>...</h2>..."}`
    - Refresh: `replaceNode` on the old figure and on the source or image line, `deleteNode` for old description nodes.
 
-   Edits leave the rest of the page untouched, and the call is a fraction of the size of a full body. Add `"dryRun": true` the first time on a page; the response shows the resulting HTML. Fall back to `body` with the full HTML only if an edit is rejected. If the token is stale, read the draft again and redo the edit once. On `internal_error`, read the draft with `detail="outline"`: if the new heading is not there and the `snapshotToken` is unchanged, nothing was applied, so send the edit once more.
+   Edits leave the rest of the page untouched, and the call is a fraction of the size of a full body. Skip `dryRun` on a page this task just copied or created. On any other page, `"dryRun": true` the first time; the response shows the resulting HTML. Fall back to `body` with the full HTML only if an edit is rejected. If the token is stale, read the draft again and redo the edit once. On `internal_error`, read the draft with `detail="outline"`: if the new heading is not there and the `snapshotToken` is unchanged, nothing was applied, so send the edit once more.
 
 ## 8. Check
 
