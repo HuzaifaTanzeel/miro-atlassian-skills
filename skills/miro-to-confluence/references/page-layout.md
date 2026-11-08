@@ -28,11 +28,26 @@ One section per diagram. The `<h2>` text is the frame title without its prefix; 
 <ul><li>...</li></ul>
 ```
 
-- `MEDIA_FILE_ID` is the attachment `fileId` (publish step 4). `PAGE_ID` is the page that owns the attachment.
+- `MEDIA_FILE_ID` is the attachment `fileId` from Route A. `PAGE_ID` is the page that owns the attachment. Do not invent either value.
 - `data-width="80"` for frames up to 1600px wide, `100` for frames 2400px wide or wider, so text in the image stays readable.
+
+### Inline image (Route B)
+
+Used only when the shell cannot resolve the Confluence host. This is not a media node and not an attachment. Percentage width, because Confluence rewrites a new image to a fixed pixel width such as 680px.
+
+```html
+<figure data-layout="center">
+  <img src="data:image/png;base64,BASE64_PNG" alt="evidence-a-control.png" width="80%" />
+  <figcaption>Use case diagram: Evidence a control</figcaption>
+</figure>
+```
+
+- `BASE64_PNG` is the PNG file's bytes. Never a local path, a `file:` URL, or a Miro link.
+- `width="100%"` when the frame is 2400px wide or wider.
+- If the read-back has a pixel width or a missing `alt`, send one full body replace that puts the percentage and the `alt` back, then compare the rest of the page (publish step 7).
 - Put the date inside `<time>` as visible text too; an empty `<time>` shows nothing.
 - The heading names in `<h3>` follow `description-template.md`. Leave out a heading that would be empty, except "Assumptions and open questions": write "None recorded." there.
-- No Miro link, embed, or iframe.
+- A Miro smart link, embed, or iframe is not the picture. If the page already has one where the diagram should be, replace that node with the figure and leave the Source sentence, including its Miro link, as it was.
 
 ### Sequence diagrams: show the source
 
